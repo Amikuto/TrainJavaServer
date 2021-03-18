@@ -25,7 +25,7 @@ public class TrainController {
     @GetMapping("/stations/{arrStationId}/{depStationId}/trains")
     public List<Train> getTrainsByArrStationAndDepStation(@PathVariable Long arrStationId,
                                                           @PathVariable Long depStationId) {
-        return trainRepository.findAllByArrStationIdAndDepStationId(arrStationId, depStationId);
+        return trainRepository.findAllByArrStationIdAndDepStationId(depStationId, arrStationId); // Проверить места!!!
     }
 
     @GetMapping("/stations/{arrStationId}/trains")
@@ -49,6 +49,21 @@ public class TrainController {
         train.setDepStation(depStation);
 
         return trainRepository.save(train);
+    }
+
+    @PostMapping("/trains")
+    public Train addTrain(@Valid @RequestBody Train train) {
+//        System.out.println(train);
+
+        Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(() -> new ResourceNotFoundException("pass"));
+        Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(() -> new ResourceNotFoundException("pass"));
+
+        train.setArrStation(stationArrival);
+        train.setDepStation(stationDepartment);
+//        System.out.println(train);
+
+        return trainRepository.save(train);
+//        return null;
     }
 
 

@@ -38,16 +38,32 @@ public class Train extends AuditModel{
     private LocalDate date_dep;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "station_arr_id")
+//    @JoinColumn(name = "station_arr_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Station arrStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "station_dep_id")
+//    @JoinColumn(name = "station_dep_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Station depStation;
+
+    @Transient
+    @JsonIgnore
+    private Long arrSt;
+
+    @Transient
+    @JsonIgnore
+    private Long depSt;
+
+    public Long getArrSt() {
+        return arrSt;
+    }
+
+    public Long getDepSt() {
+        return depSt;
+    }
 
     public LocalTime getTime_arr() {
         return time_arr;
@@ -97,6 +113,20 @@ public class Train extends AuditModel{
         this.depStation = depStation;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Train{" +
+//                "id=" + id +
+//                ", time_arr=" + time_arr +
+//                ", time_dep=" + time_dep +
+//                ", date_arr=" + date_arr +
+//                ", date_dep=" + date_dep +
+//                ", station_arr=" + arrStation +
+//                ", station_dep=" + depStation +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Train{" +
@@ -105,8 +135,10 @@ public class Train extends AuditModel{
                 ", time_dep=" + time_dep +
                 ", date_arr=" + date_arr +
                 ", date_dep=" + date_dep +
-                ", station_arr=" + arrStation +
-                ", station_dep=" + depStation +
+                ", arrStation=" + arrStation +
+                ", depStation=" + depStation +
+                ", arrSt=" + arrSt +
+                ", depSt=" + depSt +
                 '}';
     }
 }

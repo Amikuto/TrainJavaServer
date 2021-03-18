@@ -30,17 +30,17 @@ public class Station extends AuditModel {
     @Column(columnDefinition = "text")
     private String city;
 
-//    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation")
 //    @JoinColumn(name = "train_arr_id")
-//    @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonIgnore
-//    private List<Train> arrTrain;
-//
-//    @OneToMany(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private List<Train> arrTrain;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation")
 //    @JoinColumn(name = "train_dep_id")
-//    @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonIgnore
-//    private List<Train> depTrain;
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private List<Train> depTrain;
 
     public String getCity() {
         return city;
