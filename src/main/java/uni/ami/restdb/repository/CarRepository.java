@@ -7,5 +7,5 @@ import uni.ami.restdb.model.Train;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findByTrainId(Long station_arr_id);
+    List<Car> findAllByTrainId(Long trainId);
 }

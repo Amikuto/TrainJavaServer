@@ -46,15 +46,8 @@ public class Train extends AuditModel{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "station_dep_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Station depStation;
-
-    public Station getStation() {
-        return arrStation;
-    }
-
-    public Station getStation_dep() {
-        return depStation;
-    }
 
     public LocalTime getTime_arr() {
         return time_arr;
@@ -72,12 +65,12 @@ public class Train extends AuditModel{
         return date_dep;
     }
 
-    public void setStation(Station station_arr) {
-        this.arrStation = station_arr;
+    public Station getArrStation() {
+        return arrStation;
     }
 
-    public void setStation_dep(Station station_dep) {
-        this.depStation = station_dep;
+    public Station getDepStation() {
+        return depStation;
     }
 
     public void setTime_arr(LocalTime time_arr) {
@@ -94,6 +87,14 @@ public class Train extends AuditModel{
 
     public void setDate_dep(LocalDate date_dep) {
         this.date_dep = date_dep;
+    }
+
+    public void setArrStation(Station arrStation) {
+        this.arrStation = arrStation;
+    }
+
+    public void setDepStation(Station depStation) {
+        this.depStation = depStation;
     }
 
     @Override

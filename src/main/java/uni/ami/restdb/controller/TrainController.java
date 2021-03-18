@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uni.ami.restdb.exceptions.ResourceNotFoundException;
+import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
 import uni.ami.restdb.repository.StationRepository;
 import uni.ami.restdb.repository.TrainRepository;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TrainController {
@@ -20,19 +22,23 @@ public class TrainController {
     @Autowired
     private StationRepository stationRepository;
 
-    @GetMapping("/stations/{stationId}/trains")
-    public List<Train> getTrainsByQuestionId(@PathVariable Long stationId) {
-        return trainRepository.findByArrStationId(stationId);
+    @GetMapping("/stations/{arrStationId}/{depStationId}/trains")
+    public List<Train> getTrainsByStationId(@PathVariable Long arrStationId,
+                                            @PathVariable Long depStationId) {
+        return trainRepository.findAllByArrStationIdAndDepStationId(arrStationId, depStationId);
     }
 
-    @PostMapping("/stations/{stationId}/trains")
-    public Train addTrain(@PathVariable Long stationId, @Valid @RequestBody Train train) {
-        return stationRepository.findById(stationId)
-                .map(station -> {
-                    train.setStation(station);
-//                    train.setStation_dep(station);
-                    return trainRepository.save(train);
-                }).orElseThrow(() -> new ResourceNotFoundException("Station not found with id " + stationId));
+    @PostMapping("/stations/{arrStationId}/{depStationId}/trains")
+    public Train addTrain(@PathVariable Long arrStationId,
+                          @PathVariable Long depStationId,
+                          @Valid @RequestBody Train train) {
+        Station arrStation = stationRepository.findById(arrStationId).orElseThrow(() -> new ResourceNotFoundException("Arrival station not found with id " + arrStationId));
+        Station depStation = stationRepository.findById(depStationId).orElseThrow(() -> new ResourceNotFoundException("Department station not found with id " + depStationId));
+
+        train.setArrStation(arrStation);
+        train.setDepStation(depStation);
+
+        return trainRepository.save(train);
     }
 
 
@@ -63,10 +69,6 @@ public class TrainController {
 
         return trainRepository.findById(trainId)
                 .map(train -> {
-//                    train.setDate_arr(trainRequest.getDate_arr());
-//                    train.setDate_dep(trainRequest.getDate_dep());
-//                    train.setTime_arr(trainRequest.getTime_arr());
-//                    train.setTime_dep(trainRequest.getTime_dep());
                     trainRepository.delete(train);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Train not found with id " + trainId));

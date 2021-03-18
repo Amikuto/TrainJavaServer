@@ -1,6 +1,11 @@
 package uni.ami.restdb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "station")
@@ -24,6 +29,18 @@ public class Station extends AuditModel {
 
     @Column(columnDefinition = "text")
     private String city;
+
+//    @OneToMany(fetch = FetchType.LAZY, optional = true)
+//    @JoinColumn(name = "train_arr_id")
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JsonIgnore
+//    private List<Train> arrTrain;
+//
+//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+//    @JoinColumn(name = "train_dep_id")
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JsonIgnore
+//    private List<Train> depTrain;
 
     public String getCity() {
         return city;
