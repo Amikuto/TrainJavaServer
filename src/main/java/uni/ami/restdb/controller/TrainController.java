@@ -23,9 +23,19 @@ public class TrainController {
     private StationRepository stationRepository;
 
     @GetMapping("/stations/{arrStationId}/{depStationId}/trains")
-    public List<Train> getTrainsByStationId(@PathVariable Long arrStationId,
-                                            @PathVariable Long depStationId) {
+    public List<Train> getTrainsByArrStationAndDepStation(@PathVariable Long arrStationId,
+                                                          @PathVariable Long depStationId) {
         return trainRepository.findAllByArrStationIdAndDepStationId(arrStationId, depStationId);
+    }
+
+    @GetMapping("/stations/{arrStationId}/trains")
+    public List<Train> getTrainsByArrStation(@PathVariable Long arrStationId) {
+        return trainRepository.findAllByArrStationId(arrStationId);
+    }
+
+    @GetMapping("/stations/0/{depStationId}/trains")
+    public List<Train> getTrainsByDepStation(@PathVariable Long depStationId) {
+        return trainRepository.findAllByDepStationId(depStationId);
     }
 
     @PostMapping("/stations/{arrStationId}/{depStationId}/trains")
