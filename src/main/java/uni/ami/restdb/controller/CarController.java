@@ -30,9 +30,8 @@ public class CarController {
         return carRepository.findAllByTrainId(trainId);
     }
 
-    @PostMapping("/trains/{trainId}/cars")
-    public List<Car> addCar(@PathVariable Long trainId,
-                            @Valid @RequestBody Car car) {
+    @PostMapping("/cars")
+    public List<Car> addCar(@Valid @RequestBody Car car) {
         return null;
     }
 }

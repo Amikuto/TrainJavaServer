@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "train")
@@ -38,18 +39,21 @@ public class Train extends AuditModel{
     private LocalDate date_dep;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "station_arr_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Station arrStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "station_dep_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Station depStation;
 
-    @Transient
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private List<Car> cars;
+
+    @Transient // Чтобы строка не создавалась в бд
     @JsonIgnore
     private Long arrSt;
 
@@ -63,6 +67,10 @@ public class Train extends AuditModel{
 
     public Long getDepSt() {
         return depSt;
+    }
+
+    public List<Car> getCars() {
+        return cars;
     }
 
     public LocalTime getTime_arr() {
@@ -113,19 +121,9 @@ public class Train extends AuditModel{
         this.depStation = depStation;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Train{" +
-//                "id=" + id +
-//                ", time_arr=" + time_arr +
-//                ", time_dep=" + time_dep +
-//                ", date_arr=" + date_arr +
-//                ", date_dep=" + date_dep +
-//                ", station_arr=" + arrStation +
-//                ", station_dep=" + depStation +
-//                '}';
-//    }
-
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     @Override
     public String toString() {
@@ -137,8 +135,24 @@ public class Train extends AuditModel{
                 ", date_dep=" + date_dep +
                 ", arrStation=" + arrStation +
                 ", depStation=" + depStation +
+                ", cars=" + cars +
                 ", arrSt=" + arrSt +
                 ", depSt=" + depSt +
                 '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        return "Train{" +
+//                "id=" + id +
+//                ", time_arr=" + time_arr +
+//                ", time_dep=" + time_dep +
+//                ", date_arr=" + date_arr +
+//                ", date_dep=" + date_dep +
+//                ", arrStation=" + arrStation +
+//                ", depStation=" + depStation +
+//                ", arrSt=" + arrSt +
+//                ", depSt=" + depSt +
+//                '}';
+//    }
 }

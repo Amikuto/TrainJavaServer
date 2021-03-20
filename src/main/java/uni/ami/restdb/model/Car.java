@@ -32,7 +32,7 @@ public class Car extends AuditModel {
     private CarType carType;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "train_id")
+//    @JoinColumn(name = "train_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Train train;
