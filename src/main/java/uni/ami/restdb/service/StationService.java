@@ -17,7 +17,7 @@ public interface StationService {
 
     Station getStationById(Long id);
 
-    Page<Station> getAll(Pageable var1);
+    Page<Station> getAll(Pageable pageable);
 
     List<Station> getAllByDepartingTrains(Long id);
 

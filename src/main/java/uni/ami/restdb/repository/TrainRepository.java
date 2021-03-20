@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
-    List<Train> findAllByArrStationIdAndDepStationId(Long arrStation, Long depStation);
+    List<Train> findAllByDepStationIdAndArrStationId(Long depStation, Long arrStation);
     List<Train> findAllByArrStationId(Long arrStation);
     List<Train> findAllByDepStationId(Long arrStation);
 }

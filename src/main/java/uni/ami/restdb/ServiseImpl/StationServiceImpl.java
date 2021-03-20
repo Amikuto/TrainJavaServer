@@ -9,8 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
 import uni.ami.restdb.model.Station;
+import uni.ami.restdb.model.Train;
 import uni.ami.restdb.repository.StationRepository;
+import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.StationService;
+import uni.ami.restdb.service.TrainService;
 
 import java.util.List;
 
@@ -79,18 +82,18 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public Page<Station> getAll(Pageable var1) {
-        return stationRepository.findAll(var1);
+    public Page<Station> getAll(Pageable pageable) {
+        return stationRepository.findAll(pageable);
     }
 
     @Override
     public List<Station> getAllByDepartingTrains(Long id) {
-        return stationRepository.findStationByDepTrainId(id);
+        return stationRepository.findAllByDepTrainId(id);
     }
 
     @Override
     public List<Station> getAllByArrivingTrains(Long id) {
-        return stationRepository.findStationByArrTrainId(id);
+        return stationRepository.findAllByArrTrainId(id);
     }
 
     @Override
