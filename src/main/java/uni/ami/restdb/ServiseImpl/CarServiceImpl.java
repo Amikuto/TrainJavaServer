@@ -20,8 +20,8 @@ import uni.ami.restdb.service.CarService;
 
 import java.util.List;
 
+@Slf4j //TODO: lombok
 @Service
-@Slf4j
 public class CarServiceImpl implements CarService {
 
     @Autowired
@@ -36,6 +36,7 @@ public class CarServiceImpl implements CarService {
     @Autowired
     CarClassRepository carClassRepository;
 
+    //TODO: переделать с новыми методами????
     @Override
     public Car save(Car car) {
         Train train = trainRepository.findById(car.getTId()).orElseThrow(FindException::new);
@@ -76,16 +77,31 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> findAllByTrainId(Long id) {
-        return carRepository.findAllByTrainId(id);
+        return carRepository.findAllByTrainIdEquals(id);
     }
 
     @Override
     public List<Car> findAllByClassId(Long id) {
-        return carRepository.findAllByCarClassId(id);
+        return carRepository.findAllByCarClassIdEquals(id);
     }
 
     @Override
     public List<Car> findAllByTypeId(Long id) {
-        return carRepository.findAllByCarTypeId(id);
+        return carRepository.findAllByCarTypeIdEquals(id);
+    }
+
+    @Override
+    public List<Car> findAllByTrainAndClassAndTypeIds(Long train_id, Long carClass_id, Long carType_id) {
+        return carRepository.findAllByTrainIdAndCarClassIdAndCarTypeIdEquals(train_id, carClass_id, carType_id);
+    }
+
+    @Override
+    public List<Car> findAllByTrainAndTypeIds(Long trainId, Long carTypeId) {
+        return carRepository.findAllByTrainIdAndCarTypeIdEquals(trainId, carTypeId);
+    }
+
+    @Override
+    public List<Car> findAllByTrainAndClassIds(Long trainId, Long carClassId) {
+        return carRepository.findAllByTrainIdAndCarClassIdEquals(trainId, carClassId);
     }
 }

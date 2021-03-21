@@ -43,21 +43,22 @@ public class Train extends AuditModel {
     private LocalDate date_dep;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "dep_staion_id")
     @JsonIgnore
     private Station depStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "arr_staion_id")
     @JsonIgnore
+//    @Json
     private Station arrStation;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private List<Car> car;
+    private List<Car> cars;
 
     @Transient // Чтобы строка не создавалась в бд
 //    @JsonIgnore
@@ -147,9 +148,9 @@ public class Train extends AuditModel {
 //                ", time_dep=" + time_dep +
 //                ", date_arr=" + date_arr +
 //                ", date_dep=" + date_dep +
-//                ", arrStation=" + arrStation +
-//                ", depStation=" + depStation +
-//                ", cars=" + cars +
+////                ", arrStation=" + arrStation +
+////                ", depStation=" + depStation +
+////                ", cars=" + cars +
 //                ", arrSt=" + arrSt +
 //                ", depSt=" + depSt +
 //                '}';

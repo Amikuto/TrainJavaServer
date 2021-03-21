@@ -26,4 +26,10 @@ public interface CarService {
     List<Car> findAllByClassId(Long id);
 
     List<Car> findAllByTypeId(Long id);
+
+    List<Car> findAllByTrainAndClassAndTypeIds(Long trainId, Long carClassId, Long carTypeId);
+
+    List<Car> findAllByTrainAndTypeIds(Long trainId, Long carTypeId);
+
+    List<Car> findAllByTrainAndClassIds(Long trainId, Long carClassId);
 }

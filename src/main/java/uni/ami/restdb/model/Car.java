@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -40,6 +41,11 @@ public class Car extends AuditModel {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private Train train;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private List<Seat> seats;
 
     @Transient
     private Long cClass;

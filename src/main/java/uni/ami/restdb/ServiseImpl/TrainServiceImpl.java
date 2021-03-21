@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
-import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
 import uni.ami.restdb.repository.StationRepository;
@@ -17,7 +16,7 @@ import uni.ami.restdb.service.TrainService;
 
 import java.util.List;
 
-@Slf4j
+@Slf4j //TODO: lombok
 @Service
 public class TrainServiceImpl implements TrainService {
 
@@ -56,7 +55,7 @@ public class TrainServiceImpl implements TrainService {
                     station_temp.setDepSt(train.getDepSt());
                     station_temp.setArrSt(train.getArrSt());
 
-                    station_temp.setCar(train.getCar());
+                    station_temp.setCars(train.getCars());
                     return save(station_temp);
                 }).orElseThrow(FindException::new);
     }
@@ -73,16 +72,16 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public List<Train> findAllByDepStationId(Long id) {
-        return trainRepository.findAllByDepStationId(id);
+        return trainRepository.findAllByDepStationIdEquals(id);
     }
 
     @Override
     public List<Train> findAllByArrStationId(Long id) {
-        return trainRepository.findAllByArrStationId(id);
+        return trainRepository.findAllByArrStationIdEquals(id);
     }
 
     @Override
     public List<Train> findAllByDepartingStationAndArrivingStation(Long depStationId, Long arrStationId) {
-        return trainRepository.findAllByDepStationIdAndArrStationId(depStationId, arrStationId);
+        return trainRepository.findAllByDepStationIdAndArrStationIdEquals(depStationId, arrStationId);
     }
 }

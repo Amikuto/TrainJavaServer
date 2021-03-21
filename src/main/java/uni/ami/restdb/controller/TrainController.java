@@ -27,18 +27,18 @@ public class TrainController {
         return trainService.getTrainById(trainId);
     }
 
-    @GetMapping("/stations/{depStationId}/{arrStationId}/trains")
+    @GetMapping("/trains/{depStationId}/{arrStationId}/stations")
     public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable Long arrStationId,
-                                                          @PathVariable Long depStationId) {
+                                                              @PathVariable Long depStationId) {
         return trainService.findAllByDepartingStationAndArrivingStation(depStationId, arrStationId);
     }
 
-    @GetMapping("/stations/0/{arrStationId}/trains")
+    @GetMapping("/trains/0/{arrStationId}/stations/")
     public List<Train> getTrainsByArrStation(@PathVariable Long arrStationId) {
         return trainService.findAllByArrStationId(arrStationId);
     }
 
-    @GetMapping("/stations/{depStationId}/0/trains")
+    @GetMapping("/trains/{depStationId}/0/stations")
     public List<Train> getTrainsByDepStation(@PathVariable Long depStationId) {
         return trainService.findAllByDepStationId(depStationId);
     }
@@ -72,7 +72,7 @@ public class TrainController {
     }
 
 
-    @PutMapping("trains/{trainId}")
+    @PutMapping("/trains/{trainId}")
     public Train updateTrain(@PathVariable Long trainId,
                              @Valid @RequestBody Train train) {
         return trainService.update(trainId, train);
@@ -86,7 +86,7 @@ public class TrainController {
 //                }).orElseThrow(() -> new ResourceNotFoundException("Train not found with id " + trainId));
     }
 
-    @DeleteMapping("trains/{trainId}")
+    @DeleteMapping("/trains/{trainId}")
     public ResponseEntity<?> deleteTrain(@PathVariable Long trainId) {
         return trainService.delete(trainId);
     }

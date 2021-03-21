@@ -7,13 +7,14 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "station")
-public class Station extends AuditModel {
+public class Station extends AuditModel implements Serializable { //Serializable?
 
     @Id
     @GeneratedValue(generator = "station_generator")
@@ -28,19 +29,19 @@ public class Station extends AuditModel {
         return id;
     }
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", unique = true)
     private String name;
 
     @Column(columnDefinition = "text")
     private String city;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
 //    @JoinColumn(name = "train_dep_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private List<Train> depTrain;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
 //    @JoinColumn(name = "train_arr_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore

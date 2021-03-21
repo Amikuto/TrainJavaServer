@@ -1,7 +1,16 @@
 package uni.ami.restdb.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import java.util.List;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 @Table(name = "ticket")
 public class Ticket extends AuditModel {
@@ -20,6 +29,11 @@ public class Ticket extends AuditModel {
 
     @Column(columnDefinition = "text")
     private String owner;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private List<Seat> seats;
 
     public Integer getCost() {
         return cost;

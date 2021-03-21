@@ -31,14 +31,13 @@ public class StationController {
         return stationService.getStationById(stationId);
     }
 
-    //TODO: выводит только 1 строку, понять почему и пофиксить
+    //TODO: выводит только 1 строку, понять почему и пофиксить... А мне это вообще нужно???
     @GetMapping("/stations/{departingStationId}/{arrivingStationId}")
     public List<Station> getStationsByDepartingAndArrivingTrains(@PathVariable Long arrivingStationId,
-                                                                @PathVariable Long departingStationId){
+                                                                 @PathVariable Long departingStationId){
         return stationService.getAllByDepartingAndArrivingTrains(departingStationId, arrivingStationId);
     }
 
-    //TODO: выводит только 1 строку, понять почему и пофиксить
     @GetMapping("/stations/{departingStationId}/0")
     public List<Station> getStationsByDepartingTrains(@PathVariable Long departingStationId){
 //        System.out.println(departingStationId);
@@ -47,10 +46,14 @@ public class StationController {
         return stationService.getAllByDepartingTrains(departingStationId);
     }
 
-    //TODO: выводит только 1 строку, понять почему и пофиксить
     @GetMapping("/stations/0/{arrivingStationId}")
     public List<Station> getStationsByArrivingTrains(@PathVariable Long arrivingStationId){
         return stationService.getAllByArrivingTrains(arrivingStationId);
+    }
+
+    @GetMapping("/stations/city")
+    public List<Object> getCity() {
+        return stationRepository.getStationCities();
     }
 
     @PostMapping("/stations")

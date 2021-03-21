@@ -17,13 +17,9 @@ import uni.ami.restdb.service.TrainService;
 
 import java.util.List;
 
-@Slf4j
+@Slf4j //TODO: lombok
 @Service
 public class StationServiceImpl implements StationService {
-    /**
-     *
-     * @param station
-     */
 
     @Autowired
     StationRepository stationRepository;
@@ -88,16 +84,21 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public List<Station> getAllByDepartingTrains(Long id) {
-        return stationRepository.findAllByDepTrainId(id);
+        return stationRepository.findAllByDepTrainIdEquals(id);
     }
 
     @Override
     public List<Station> getAllByArrivingTrains(Long id) {
-        return stationRepository.findAllByArrTrainId(id);
+        return stationRepository.findAllByArrTrainIdEquals(id);
     }
 
+    //TODO: удалить?
     @Override
-    public List<Station> getAllByDepartingAndArrivingTrains(Long depTrainId, Long arrTrainId) {
-        return stationRepository.findAllByArrTrainIdAndDepTrainId(arrTrainId, depTrainId);
+    public List<Station> getAllByDepartingAndArrivingTrains(Long departingStationId, Long arrivingStationId) {
+        return stationRepository.findAllByDepTrainIdAndArrTrainIdEquals(departingStationId, arrivingStationId);
+    }
+
+    public Long getStationIdByName(String name){
+        return stationRepository.findStationIdByNameEquals(name);
     }
 }

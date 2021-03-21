@@ -1,17 +1,12 @@
 package uni.ami.restdb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uni.ami.restdb.ServiseImpl.CarServiceImpl;
 import uni.ami.restdb.model.Car;
-import uni.ami.restdb.model.Train;
-import uni.ami.restdb.repository.CarRepository;
-import uni.ami.restdb.repository.StationRepository;
-import uni.ami.restdb.repository.TrainRepository;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -36,10 +31,22 @@ public class CarController {
         return carService.getAll(pageable);
     }
 
-    @GetMapping("/trains/{trainId}/cars")
+    @GetMapping("/cars/trains/{trainId}")
     public List<Car> getCarsByTrainId(@PathVariable Long trainId) {
-        System.out.println(carService.findAllByTrainId(trainId));
         return carService.findAllByTrainId(trainId);
+    }
+
+    @GetMapping("/cars/trains/{trainId}/type/{typeId}")
+    public List<Car> getCarsByTrainId(@PathVariable Long trainId,
+                                      @PathVariable Long typeId) {
+        return carService.findAllByTrainAndTypeIds(trainId, typeId);
+    }
+
+    @GetMapping("/cars/trains/{trainId}/type/{typeId}/class/{classId}")
+    public List<Car> getCarsByTrainId(@PathVariable Long trainId,
+                                      @PathVariable Long typeId,
+                                      @PathVariable Long classId) {
+        return carService.findAllByTrainAndClassAndTypeIds(trainId, classId, typeId);
     }
 
     @PostMapping("/cars")

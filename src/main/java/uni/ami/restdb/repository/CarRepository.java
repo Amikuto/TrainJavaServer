@@ -6,7 +6,11 @@ import uni.ami.restdb.model.Car;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    List<Car> findAllByTrainId(Long trainId);
-    List<Car> findAllByCarClassId(Long carClass_id);
-    List<Car> findAllByCarTypeId(Long carType_id);
+    List<Car> findAllByTrainIdEquals(Long trainId);
+    List<Car> findAllByCarClassIdEquals(Long carClass_id);
+    List<Car> findAllByCarTypeIdEquals(Long carType_id);
+
+    List<Car> findAllByTrainIdAndCarClassIdAndCarTypeIdEquals(Long train_id, Long carClass_id, Long carType_id);
+    List<Car> findAllByTrainIdAndCarClassIdEquals(Long train_id, Long carClass_id);
+    List<Car> findAllByTrainIdAndCarTypeIdEquals(Long train_id, Long carType_id);
 }

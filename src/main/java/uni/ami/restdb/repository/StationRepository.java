@@ -10,10 +10,11 @@ import java.util.List;
 
 @Repository
 public interface StationRepository extends JpaRepository<Station, Long> {
-    List<Station> findAllByArrTrainId(Long trainId);
-    List<Station> findAllByDepTrainId(Long trainId);
-//    List<Station> findAllByDepTrainContains(List<Train> depTrain);
-    List<Station> findAllByArrTrainIdAndDepTrainId(Long arrTrain_id, Long depTrain_id);
+    Long findStationIdByNameEquals(String name);
+    List<Station> findAllByArrTrainIdEquals(Long arrTrain_id);
+    List<Station> findAllByDepTrainIdEquals(Long depTrain_id);
+    List<Station> findAllByDepTrainIdAndArrTrainIdEquals(Long arrTrain_id, Long depTrain_id);
 
-//    @Query
+    @Query("select s.city from Station s")
+    List<Object> getStationCities();
 }
