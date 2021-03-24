@@ -8,10 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
-import uni.ami.restdb.model.Train;
 import uni.ami.restdb.model.User;
 import uni.ami.restdb.repository.UserRepository;
 import uni.ami.restdb.service.UserService;
+
+import java.util.Map;
 
 
 @Slf4j //TODO: lombok
@@ -61,5 +62,9 @@ public class UserServiceImpl implements UserService{
         return userRepository.findAll(pageable);
     }
 
+    public boolean checkCorrectUser(String userLogin, Map<String, String> givenPassword) {
+        String userPassword = userRepository.findByLogin(userLogin).getPassword();
 
+        return userPassword.equals(givenPassword.get("password"));
+    }
 }

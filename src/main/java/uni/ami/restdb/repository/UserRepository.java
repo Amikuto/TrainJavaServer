@@ -6,4 +6,5 @@ import uni.ami.restdb.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByLogin(String login);
 }

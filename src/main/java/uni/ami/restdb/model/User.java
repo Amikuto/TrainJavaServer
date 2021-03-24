@@ -24,13 +24,13 @@ public class User {
     )
     private Long id;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", unique = true)
     private String fullName;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", unique = true)
     private String email;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", unique = true)
     private String login;
 
     @Column(columnDefinition = "text")
