@@ -35,6 +35,11 @@ public class Ticket extends AuditModel {
     @JsonIgnore
     private List<Seat> seats;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
+    private User user;
+
     public Integer getCost() {
         return cost;
     }
