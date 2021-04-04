@@ -9,6 +9,7 @@ import uni.ami.restdb.ServiseImpl.TrainServiceImpl;
 import uni.ami.restdb.model.Train;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,8 @@ public class TrainController {
     @GetMapping("/trains/{depStationId}/{arrStationId}/stations")
     public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable Long arrStationId,
                                                               @PathVariable Long depStationId) {
+
+//        System.out.println(trainService.getTrainById(10L));
         return trainService.findAllByDepartingStationAndArrivingStation(depStationId, arrStationId);
     }
 
@@ -41,6 +44,13 @@ public class TrainController {
     @GetMapping("/trains/{depStationId}/0/stations")
     public List<Train> getTrainsByDepStation(@PathVariable Long depStationId) {
         return trainService.findAllByDepStationId(depStationId);
+    }
+
+    @GetMapping("/trains/{depStationId}/{arrStationId}/{depDate}")
+    public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable Long arrStationId,
+                                                              @PathVariable Long depStationId,
+                                                              @PathVariable String depDate) {
+        return trainService.findAllByArrivingStationAndDepartingStationAndDate(depStationId, arrStationId, depDate);
     }
 
 //    @PostMapping("/stations/{arrStationId}/{depStationId}/trains")
@@ -58,7 +68,7 @@ public class TrainController {
 
     @PostMapping("/trains")
     public Train addTrain(@Valid @RequestBody Train train) {
-        System.out.println(train);
+//        System.out.println(train);
 //        System.out.println(train);
 
 //        Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(() -> new ResourceNotFoundException("pass"));

@@ -1,6 +1,6 @@
 package uni.ami.restdb.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -26,33 +29,36 @@ public class Train extends AuditModel {
     )
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
-
-    @Column(columnDefinition = "time")
-    private LocalTime time_arr;
-
-    @Column(columnDefinition = "time")
-    private LocalTime time_dep;
+//    public Long getId() {
+//        return id;
+//    }
 
     @Column(columnDefinition = "date")
-    private LocalDate date_arr;
+    private LocalDate dateDep;
 
     @Column(columnDefinition = "date")
-    private LocalDate date_dep;
+    private LocalDate dateArr;
+
+    @Column(columnDefinition = "time")
+    private LocalTime timeDep;
+
+    @Column(columnDefinition = "time")
+    private LocalTime timeArr;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "dep_staion_id")
     @JsonIgnore
+//    @JsonBackReference
+    @JoinColumn(columnDefinition = "depTrain")
     private Station depStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "arr_staion_id")
     @JsonIgnore
-//    @Json
+//    @JsonBackReference
+    @JoinColumn(columnDefinition = "arrTrain")
     private Station arrStation;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
@@ -61,11 +67,9 @@ public class Train extends AuditModel {
     private List<Car> cars;
 
     @Transient // Чтобы строка не создавалась в бд
-//    @JsonIgnore
     private Long arrSt;
 
     @Transient
-//    @JsonIgnore
     private Long depSt;
 
 //    public List<Car> getCars() {
@@ -88,10 +92,12 @@ public class Train extends AuditModel {
 //        return date_dep;
 //    }
 //
+//    @JsonBackReference
 //    public Station getArrStation() {
 //        return arrStation;
 //    }
 //
+//    @JsonBackReference
 //    public Station getDepStation() {
 //        return depStation;
 //    }
@@ -169,5 +175,17 @@ public class Train extends AuditModel {
 //                ", arrSt=" + arrSt +
 //                ", depSt=" + depSt +
 //                '}';
+//    }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof Station )) return false;
+//        return id != null && id.equals(((Station) o).getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return getClass().hashCode();
 //    }
 }

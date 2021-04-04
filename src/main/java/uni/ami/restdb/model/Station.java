@@ -1,15 +1,22 @@
 package uni.ami.restdb.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -25,25 +32,26 @@ public class Station extends AuditModel implements Serializable { //Serializable
     )
     private Long id;
 
-    public Long getId() {
-        return id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
 
     @Column(columnDefinition = "text", unique = true)
+//    @Id
     private String name;
 
     @Column(columnDefinition = "text")
     private String city;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "train_dep_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JsonManagedReference
     @JsonIgnore
     private List<Train> depTrain;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "train_arr_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JsonManagedReference
     @JsonIgnore
     private List<Train> arrTrain;
 
@@ -55,10 +63,12 @@ public class Station extends AuditModel implements Serializable { //Serializable
 //        return name;
 //    }
 //
+//    @JsonManagedReference
 //    public List<Train> getDepTrain() {
 //        return depTrain;
 //    }
 //
+//    @JsonManagedReference
 //    public List<Train> getArrTrain() {
 //        return arrTrain;
 //    }

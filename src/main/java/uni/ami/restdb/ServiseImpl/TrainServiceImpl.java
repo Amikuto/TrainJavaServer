@@ -14,7 +14,10 @@ import uni.ami.restdb.repository.StationRepository;
 import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.TrainService;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j //TODO: lombok
 @Service
@@ -32,7 +35,9 @@ public class TrainServiceImpl implements TrainService {
         Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
 
         train.setArrStation(stationArrival);
+//        train.setArrSt(train.getArrSt());
         train.setDepStation(stationDepartment);
+//        train.setDepSt(train.getDepSt());
 
         return trainRepository.save(train);
     }
@@ -48,12 +53,12 @@ public class TrainServiceImpl implements TrainService {
     public Train update(Long id, Train train) {
         return trainRepository.findById(id)
                 .map(station_temp -> {
-                    station_temp.setDate_dep(train.getDate_dep());
-                    station_temp.setDate_arr(train.getDate_arr());
-                    station_temp.setTime_dep(train.getTime_dep());
-                    station_temp.setTime_arr(train.getTime_arr());
-                    station_temp.setDepSt(train.getDepSt());
-                    station_temp.setArrSt(train.getArrSt());
+                    station_temp.setDateDep(train.getDateDep());
+                    station_temp.setDateArr(train.getDateArr());
+                    station_temp.setTimeDep(train.getTimeDep());
+                    station_temp.setTimeArr(train.getTimeArr());
+//                    station_temp.setDepSt(train.getDepSt());
+//                    station_temp.setArrSt(train.getArrSt());
 
                     station_temp.setCars(train.getCars());
                     return save(station_temp);
@@ -84,4 +89,24 @@ public class TrainServiceImpl implements TrainService {
     public List<Train> findAllByDepartingStationAndArrivingStation(Long depStationId, Long arrStationId) {
         return trainRepository.findAllByDepStationIdAndArrStationIdEquals(depStationId, arrStationId);
     }
+
+    @Override
+    public List<Train> findAllByArrivingStationAndDepartingStationAndDate(Long depStationId, Long arrStationId, String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate depDate = LocalDate.parse(date, formatter);
+        List<Train> trainList = trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
+        for (Train train : trainList) {
+            train.setDepSt(depStationId);
+            train.setArrSt(arrStationId);
+        }
+        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
+    }
+
+//    @Override
+//    public List<Train> findAllByArrivingStationAndDepartingStationAndDate(Long depStationId, Long arrStationId, String dare) {
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+////        formatter = formatter.withLocale( putAppropriateLocaleHere );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
+//        LocalDate depDate = LocalDate.parse(dare, formatter);
+//        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
+//    }
 }
