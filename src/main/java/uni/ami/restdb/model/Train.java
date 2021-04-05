@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -48,16 +49,16 @@ public class Train extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "dep_staion_id")
-    @JsonIgnore
-//    @JsonBackReference
+//    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(columnDefinition = "depTrain")
     private Station depStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "arr_staion_id")
-    @JsonIgnore
-//    @JsonBackReference
+//    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(columnDefinition = "arrTrain")
     private Station arrStation;
 
@@ -67,10 +68,21 @@ public class Train extends AuditModel {
     private List<Car> cars;
 
     @Transient // Чтобы строка не создавалась в бд
+//    @Query("SELECT t FROM t Station WHERE e")
     private Long arrSt;
 
     @Transient
     private Long depSt;
+
+    @PostLoad
+    private void setArrAndDepSt() {
+        this.depSt = depStation.getId();
+        this.arrSt = arrStation.getId();
+    }
+
+//    @PostLoad
+//    private void setDepSt() {
+//    }
 
 //    public List<Car> getCars() {
 //        return cars;

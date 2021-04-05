@@ -35,9 +35,11 @@ public class TrainServiceImpl implements TrainService {
         Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
 
         train.setArrStation(stationArrival);
-//        train.setArrSt(train.getArrSt());
+        train.setArrSt(stationArrival.getId());
         train.setDepStation(stationDepartment);
-//        train.setDepSt(train.getDepSt());
+        train.setDepSt(stationDepartment.getId());
+
+        System.out.println(train);
 
         return trainRepository.save(train);
     }
