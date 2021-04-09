@@ -40,14 +40,14 @@ public class Station extends AuditModel implements Serializable { //Serializable
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonManagedReference
-//    @JsonIgnore
+//    @JsonManagedReference
+    @JsonIgnore
     private List<Train> depTrain;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonManagedReference
-//    @JsonIgnore
+//    @JsonManagedReference
+    @JsonIgnore
     private List<Train> arrTrain;
 
 //    public String getCity() {

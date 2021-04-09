@@ -69,5 +69,5 @@ public class StationController {
     @DeleteMapping("/stations/{stationId}")
     public ResponseEntity<?> deleteStation(@Valid @PathVariable Long stationId) {
         return stationService.delete(stationId);
-    }
+    }8
 }

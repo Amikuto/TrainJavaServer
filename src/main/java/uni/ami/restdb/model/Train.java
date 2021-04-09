@@ -49,16 +49,16 @@ public class Train extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "dep_staion_id")
-//    @JsonIgnore
-    @JsonBackReference
+    @JsonIgnore
+//    @JsonBackReference
     @JoinColumn(columnDefinition = "depTrain")
     private Station depStation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JoinColumn(name = "arr_staion_id")
-//    @JsonIgnore
-    @JsonBackReference
+    @JsonIgnore
+//    @JsonBackReference
     @JoinColumn(columnDefinition = "arrTrain")
     private Station arrStation;
 
