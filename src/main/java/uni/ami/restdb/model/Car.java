@@ -48,13 +48,20 @@ public class Car extends AuditModel {
     private List<Seat> seats;
 
     @Transient
-    private Long cClass;
+    private String cClass;
 
     @Transient
-    private Long cType;
+    private String cType;
 
     @Transient
     private Long tId;
+
+    @PostLoad
+    private void setTrainClassType() {
+        this.cClass = carClass.getName();
+        this.cType = carType.getName();
+        this.tId = train.getId();
+    }
 
 //    public Long getId() {
 //        return id;

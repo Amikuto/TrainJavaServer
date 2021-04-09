@@ -4,10 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.model.Car;
 import uni.ami.restdb.model.Seat;
+import uni.ami.restdb.repository.CarRepository;
 import uni.ami.restdb.repository.SeatRepository;
 import uni.ami.restdb.service.SeatService;
 
@@ -18,16 +21,23 @@ import java.util.List;
 public class SeatServiceImpl implements SeatService {
 
     @Autowired
+    CarRepository carRepository;
+
+    @Autowired
     SeatRepository seatRepository;
 
     @Override
-    public Seat save(Seat seat) {
-        return null;
+    public Seat save(Seat seat, Long id) {
+        Car car = carRepository.findById(id).orElseThrow(FindException::new);
+        seat.setCar(car);
+        return seatRepository.save(seat);
     }
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        return null;
+        Seat seat = getSeatById(id);
+        seatRepository.delete(seat);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override

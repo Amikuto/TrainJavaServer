@@ -6,4 +6,5 @@ import uni.ami.restdb.model.CarType;
 
 @Repository
 public interface CarTypeRepository extends JpaRepository<CarType, Long> {
+    CarType findByNameEquals(String name);
 }

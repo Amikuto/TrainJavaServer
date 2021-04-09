@@ -28,17 +28,17 @@ public class SeatController {
         return seatService.getAll(pageable);
     }
 
-    @GetMapping("/seats/tickets/{ticketId}")
+    @GetMapping("/seats/{ticketId}/tickets")
     public List<Seat> findAllByCost(@PathVariable Long ticketId) {
         return seatService.findAllByTicketId(ticketId);
     }
 
-    @GetMapping("/seats/costs/{cost}")
+    @GetMapping("/seats/{cost}/costs")
     public List<Seat> findAllByCost(@PathVariable Integer cost) {
         return seatService.findAllByCost(cost);
     }
 
-    @GetMapping("/seats/cars/{carId}")
+    @GetMapping("/seats/{carId}/cars")
     public List<Seat> findAllByCar(@PathVariable Long carId) {
         return seatService.findAllByCarId(carId);
     }

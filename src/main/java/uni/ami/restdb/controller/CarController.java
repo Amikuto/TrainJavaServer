@@ -31,7 +31,7 @@ public class CarController {
         return carService.getAll(pageable);
     }
 
-    @GetMapping("/cars/trains/{trainId}")
+    @GetMapping("/cars/{trainId}/trains")
     public List<Car> getCarsByTrainId(@PathVariable Long trainId) {
         return carService.findAllByTrainId(trainId);
     }
@@ -42,7 +42,7 @@ public class CarController {
         return carService.findAllByTrainAndTypeIds(trainId, typeId);
     }
 
-    @GetMapping("/cars/trains/{trainId}/type/{typeId}/class/{classId}")
+    @GetMapping("/cars/{trainId}/trains/{typeId}/type/{classId}/class")
     public List<Car> getCarsByTrainId(@PathVariable Long trainId,
                                       @PathVariable Long typeId,
                                       @PathVariable Long classId) {

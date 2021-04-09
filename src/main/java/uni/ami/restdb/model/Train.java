@@ -12,9 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "id")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity

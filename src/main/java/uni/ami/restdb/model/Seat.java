@@ -35,11 +35,19 @@ public class Seat extends AuditModel {
     @JsonIgnore
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "ticketId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Ticket ticket;
+
+    @Transient
+    private Long cId;
+
+    @PostLoad
+    private void setArrAndDepSt() {
+        this.cId = car.getId();
+    }
 
 //    public String getType() {
 //        return type;

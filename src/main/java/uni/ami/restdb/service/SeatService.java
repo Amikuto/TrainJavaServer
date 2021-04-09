@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface SeatService {
 
-    Seat save(Seat seat);
+    Seat save(Seat seat, Long id);
 
     ResponseEntity<?> delete(Long id);
 

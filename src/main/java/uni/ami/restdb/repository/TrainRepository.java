@@ -17,5 +17,5 @@ public interface TrainRepository extends JpaRepository<Train, Long> {
     List<Train> findAllByDepStationIdAndArrStationIdEquals(Long depStationId, Long arrStationId);
     List<Train> findAllByDepStationIdEquals(Long depStationId);
     List<Train> findAllByArrStationIdEquals(Long arrStationId);
-    List<Train> findAllByDepStationIdAndArrStationIdAndDateArrEquals(Long depStationId, Long arrStationId, LocalDate depDate);
+    List<Train> findAllByDepStationIdAndArrStationIdAndDateDepEquals(Long depStationId, Long arrStationId, LocalDate depDate);
 }

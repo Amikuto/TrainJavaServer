@@ -15,8 +15,8 @@ import java.util.List;
 @RestController
 public class StationController {
 
-    @Autowired
-    private StationRepository stationRepository;
+//    @Autowired
+//    private StationRepository stationRepository;
 
     @Autowired
     private StationServiceImpl stationService;
@@ -51,10 +51,10 @@ public class StationController {
         return stationService.getAllByArrivingTrains(arrivingStationId);
     }
 
-    @GetMapping("/stations/city")
-    public List<Object> getCity() {
-        return stationRepository.getStationCities();
-    }
+//    @GetMapping("/stations/city")
+//    public List<Object> getCity() {
+//        return stationService.getStationCities();
+//    }
 
     @PostMapping("/stations")
     public Station addStation(@Valid @RequestBody Station station) {
@@ -69,5 +69,5 @@ public class StationController {
     @DeleteMapping("/stations/{stationId}")
     public ResponseEntity<?> deleteStation(@Valid @PathVariable Long stationId) {
         return stationService.delete(stationId);
-    }8
+    }
 }

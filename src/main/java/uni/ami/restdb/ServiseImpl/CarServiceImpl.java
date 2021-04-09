@@ -20,7 +20,8 @@ import uni.ami.restdb.service.CarService;
 
 import java.util.List;
 
-@Slf4j //TODO: lombok
+//TODO: lombok
+@Slf4j
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -36,15 +37,18 @@ public class CarServiceImpl implements CarService {
     @Autowired
     CarClassRepository carClassRepository;
 
-    //TODO: переделать с новыми методами????
+//    TODO: переделать с новыми методами????
     @Override
     public Car save(Car car) {
         Train train = trainRepository.findById(car.getTId()).orElseThrow(FindException::new);
-        CarClass carClass = carClassRepository.findById(car.getCClass()).orElseThrow(FindException::new);
-        CarType carType = carTypeRepository.findById(car.getCType()).orElseThrow(FindException::new);
+        CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+        CarType carType = carTypeRepository.findByNameEquals(car.getCType());
         car.setTrain(train);
+        car.setTId(train.getId());
         car.setCarClass(carClass);
+        car.setCClass(carClass.getName());
         car.setCarType(carType);
+        car.setCType(carType.getName());
         return carRepository.save(car);
     }
 
@@ -60,8 +64,8 @@ public class CarServiceImpl implements CarService {
     public Car update(Long id, Car car) {
 //        return carRepository.findById(id)
 //                .map(car_temp -> {
-//                    car_temp.se
-//                });
+//                    car_temp.set
+//                }).orElseThrow(FindException::new);
         return null;
     }
 

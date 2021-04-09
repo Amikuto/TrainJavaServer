@@ -17,7 +17,6 @@ import uni.ami.restdb.service.TrainService;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j //TODO: lombok
 @Service
@@ -39,8 +38,6 @@ public class TrainServiceImpl implements TrainService {
         train.setDepStation(stationDepartment);
         train.setDepSt(stationDepartment.getId());
 
-        System.out.println(train);
-
         return trainRepository.save(train);
     }
 
@@ -54,16 +51,21 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public Train update(Long id, Train train) {
         return trainRepository.findById(id)
-                .map(station_temp -> {
-                    station_temp.setDateDep(train.getDateDep());
-                    station_temp.setDateArr(train.getDateArr());
-                    station_temp.setTimeDep(train.getTimeDep());
-                    station_temp.setTimeArr(train.getTimeArr());
-//                    station_temp.setDepSt(train.getDepSt());
-//                    station_temp.setArrSt(train.getArrSt());
+                .map(train_temp -> {
+                    train_temp.setDateDep(train.getDateDep());
+                    train_temp.setDateArr(train.getDateArr());
+                    train_temp.setTimeDep(train.getTimeDep());
+                    train_temp.setTimeArr(train.getTimeArr());
 
-                    station_temp.setCars(train.getCars());
-                    return save(station_temp);
+                    Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
+                    Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
+
+                    train_temp.setArrStation(stationArrival);
+                    train_temp.setArrSt(stationArrival.getId());
+                    train_temp.setDepStation(stationDepartment);
+                    train_temp.setDepSt(stationDepartment.getId());
+
+                    return trainRepository.save(train_temp);
                 }).orElseThrow(FindException::new);
     }
 
@@ -96,12 +98,12 @@ public class TrainServiceImpl implements TrainService {
     public List<Train> findAllByArrivingStationAndDepartingStationAndDate(Long depStationId, Long arrStationId, String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate depDate = LocalDate.parse(date, formatter);
-        List<Train> trainList = trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
+        List<Train> trainList = trainRepository.findAllByDepStationIdAndArrStationIdAndDateDepEquals(depStationId, arrStationId, depDate);
         for (Train train : trainList) {
             train.setDepSt(depStationId);
             train.setArrSt(arrStationId);
         }
-        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
+        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateDepEquals(depStationId, arrStationId, depDate);
     }
 
 //    @Override
