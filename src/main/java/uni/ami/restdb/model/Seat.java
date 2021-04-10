@@ -1,5 +1,6 @@
 package uni.ami.restdb.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,7 +33,8 @@ public class Seat extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name = "carSeats")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonBackReference
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +47,7 @@ public class Seat extends AuditModel {
     private Long cId;
 
     @PostLoad
-    private void setArrAndDepSt() {
+    private void setCarId() {
         this.cId = car.getId();
     }
 

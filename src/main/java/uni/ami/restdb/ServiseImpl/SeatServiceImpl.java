@@ -42,7 +42,13 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public Seat update(Long id, Seat seat) {
-        return null;
+        return seatRepository.findById(id)
+                .map(seat_temp -> {
+                    seat_temp.setType(seat.getType());
+                    seat_temp.setCost(seat.getCost());
+
+                    return seatRepository.save(seat_temp);
+                }).orElseThrow(FindException::new);
     }
 
     @Override

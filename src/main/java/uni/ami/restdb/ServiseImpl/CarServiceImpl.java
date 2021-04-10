@@ -59,14 +59,20 @@ public class CarServiceImpl implements CarService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // TODO: доделать
     @Override
     public Car update(Long id, Car car) {
-//        return carRepository.findById(id)
-//                .map(car_temp -> {
-//                    car_temp.set
-//                }).orElseThrow(FindException::new);
-        return null;
+        return carRepository.findById(id)
+                .map(car_temp -> {
+                    CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+                    CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+
+                    car_temp.setCarClass(carClass);
+                    car_temp.setCClass(carClass.getName());
+                    car_temp.setCarType(carType);
+                    car_temp.setCType(carType.getName());
+
+                    return carRepository.save(car_temp);
+                }).orElseThrow(FindException::new);
     }
 
     @Override

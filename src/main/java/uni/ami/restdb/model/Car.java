@@ -1,6 +1,7 @@
 package uni.ami.restdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -44,7 +45,8 @@ public class Car extends AuditModel {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonManagedReference
     private List<Seat> seats;
 
     @Transient
