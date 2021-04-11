@@ -53,6 +53,14 @@ public class Station extends AuditModel implements Serializable { //Serializable
     @JoinColumn(columnDefinition = "stations")
     private City city;
 
+    @Transient
+    private String cityName;
+
+    @PostLoad
+    private void setCityName() {
+        this.cityName = city.getName();
+    }
+
 //    public String getCity() {
 //        return city;
 //    }

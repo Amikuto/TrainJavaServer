@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.model.City;
 import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
+import uni.ami.restdb.repository.CityRepository;
 import uni.ami.restdb.repository.StationRepository;
 import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.StationService;
@@ -24,56 +26,40 @@ public class StationServiceImpl implements StationService {
     @Autowired
     StationRepository stationRepository;
 
+    @Autowired
+    CityRepository cityRepository;
+
     @Override
-    public Station save(Station station) {
+    public Station save(Station station, String cityName) {
+        City city = cityRepository.findByNameEquals(cityName);
+        station.setCity(city);
         return stationRepository.save(station);
     }
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-//        if (stationRepository.findById(id).isPresent()) {
-//            Station station = stationRepository.findById(id).get();
-//            stationRepository.delete(station);
-//        }// else throw FindException;
-
         Station station = stationRepository.findById(id).orElseThrow(FindException::new);
-
         stationRepository.delete(station);
-
         return new ResponseEntity<>(HttpStatus.OK);
-
-//        return stationRepository.findById(id)
-//                .map(station -> {
-////                    stationRepository.delete(station);
-//                    return stationRepository.delete(station);
-//                }).orElseThrow(FindException::new);
     }
 
     @Override
     public Station update(Long id, Station station) {
-//        if (stationRepository.findById(id).isPresent()) {
-//            Station station_temp = stationRepository.findById(id).get();
-//            station_temp.setName(station.getName());
-//            station_temp.setCity(station.getCity());
-//            return stationRepository.save(station_temp);
-//        }
-
         return stationRepository.findById(id)
                 .map(station_temp -> {
-                    station_temp.setCity(station.getCity());
-                    station_temp.setName(station.getName());
+                    if (station.getCityName() != null){
+                        City city = cityRepository.findByNameEquals(station.getCityName());
+                        station_temp.setCity(city);
+                        station_temp.setCityName(city.getName());
+                    } else {
+                        station_temp.setName(station.getName());
+                    }
                     return stationRepository.save(station_temp);
                 }).orElseThrow(FindException::new);
     }
 
     @Override
     public Station getStationById(Long id) {
-//        if (stationRepository.findById(id).isPresent()) {
-//            return stationRepository.findById(id).get();
-//        } else {
-//            return null;
-//        }
-
         return stationRepository.findById(id).orElseThrow(FindException::new);
     }
 
@@ -92,7 +78,6 @@ public class StationServiceImpl implements StationService {
         return stationRepository.findAllByArrTrainIdEquals(id);
     }
 
-    //TODO: удалить?
     @Override
     public List<Station> getAllByDepartingAndArrivingTrains(Long departingStationId, Long arrivingStationId) {
         return stationRepository.findAllByDepTrainIdAndArrTrainIdEquals(departingStationId, arrivingStationId);

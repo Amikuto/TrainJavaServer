@@ -37,7 +37,6 @@ public class CarServiceImpl implements CarService {
     @Autowired
     CarClassRepository carClassRepository;
 
-//    TODO: переделать с новыми методами????
     @Override
     public Car save(Car car) {
         Train train = trainRepository.findById(car.getTId()).orElseThrow(FindException::new);
@@ -63,13 +62,21 @@ public class CarServiceImpl implements CarService {
     public Car update(Long id, Car car) {
         return carRepository.findById(id)
                 .map(car_temp -> {
-                    CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
-                    CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+                    if (car.getCClass() != null) {
+                        CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+                        car_temp.setCarClass(carClass);
+                        car_temp.setCClass(carClass.getName());
+                    }
 
-                    car_temp.setCarClass(carClass);
-                    car_temp.setCClass(carClass.getName());
-                    car_temp.setCarType(carType);
-                    car_temp.setCType(carType.getName());
+                    if (car.getCType() != null) {
+                        CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+                        car_temp.setCarType(carType);
+                        car_temp.setCType(carType.getName());
+                    }
+
+                    if (car.getNumber() != null) {
+                        car_temp.setNumber(car.getNumber());
+                    }
 
                     return carRepository.save(car_temp);
                 }).orElseThrow(FindException::new);

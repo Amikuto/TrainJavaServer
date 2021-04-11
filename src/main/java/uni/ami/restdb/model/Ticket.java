@@ -40,28 +40,28 @@ public class Ticket extends AuditModel {
     @JsonIgnore
     private User user;
 
-    public Integer getCost() {
-        return cost;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    @Override
-    public String toString() {
-        return "Ticket{" +
-                "id=" + id +
-                ", cost=" + cost +
-                ", owner='" + owner + '\'' +
-                '}';
-    }
+//    public Integer getCost() {
+//        return cost;
+//    }
+//
+//    public String getOwner() {
+//        return owner;
+//    }
+//
+//    public void setCost(Integer cost) {
+//        this.cost = cost;
+//    }
+//
+//    public void setOwner(String owner) {
+//        this.owner = owner;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return "Ticket{" +
+//                "id=" + id +
+//                ", cost=" + cost +
+//                ", owner='" + owner + '\'' +
+//                '}';
+//    }
 }

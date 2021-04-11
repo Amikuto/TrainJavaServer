@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
 import uni.ami.restdb.model.Car;
 import uni.ami.restdb.model.Seat;
+import uni.ami.restdb.model.SeatType;
 import uni.ami.restdb.repository.CarRepository;
 import uni.ami.restdb.repository.SeatRepository;
+import uni.ami.restdb.repository.SeatTypeRepository;
 import uni.ami.restdb.service.SeatService;
 
 import java.util.List;
@@ -26,10 +28,19 @@ public class SeatServiceImpl implements SeatService {
     @Autowired
     SeatRepository seatRepository;
 
+    @Autowired
+    SeatTypeRepository seatTypeRepository;
+
     @Override
     public Seat save(Seat seat, Long id) {
         Car car = carRepository.findById(id).orElseThrow(FindException::new);
         seat.setCar(car);
+        seat.setCId(car.getId());
+
+        SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
+        seat.setType(seatType);
+        seat.setSeatType(seatType.getName());
+
         return seatRepository.save(seat);
     }
 
@@ -44,8 +55,24 @@ public class SeatServiceImpl implements SeatService {
     public Seat update(Long id, Seat seat) {
         return seatRepository.findById(id)
                 .map(seat_temp -> {
-                    seat_temp.setType(seat.getType());
-                    seat_temp.setCost(seat.getCost());
+                    if (seat.getCId() != null) {
+                        Car car = carRepository.findById(seat.getCId()).orElseThrow(FindException::new);
+                        seat_temp.setCar(car);
+                        seat_temp.setCId(car.getId());
+                    }
+
+                    if (seat.getSeatType() != null) {
+                        SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
+                        seat_temp.setType(seatType);
+                        seat_temp.setSeatType(seatType.getName());
+                    }
+
+                    if (seat.getCost() != null) {
+                        seat_temp.setCost(seat.getCost());
+                    }
+                    if (seat.getNumber() != null) {
+                        seat_temp.setNumber(seat.getNumber());
+                    }
 
                     return seatRepository.save(seat_temp);
                 }).orElseThrow(FindException::new);

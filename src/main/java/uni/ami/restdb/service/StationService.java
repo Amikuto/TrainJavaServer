@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StationService {
 
-    Station save(Station station);
+    Station save(Station station, String cityName);
 
     ResponseEntity<?> delete(Long id);
 

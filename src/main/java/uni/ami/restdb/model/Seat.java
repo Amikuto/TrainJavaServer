@@ -1,7 +1,9 @@
 package uni.ami.restdb.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -9,6 +11,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
@@ -33,6 +39,7 @@ public class Seat extends AuditModel {
 //    @Column(columnDefinition = "text")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonIgnore
     private SeatType type;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

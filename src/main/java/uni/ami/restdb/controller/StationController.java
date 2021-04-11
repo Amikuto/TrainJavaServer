@@ -56,13 +56,15 @@ public class StationController {
 //        return stationService.getStationCities();
 //    }
 
-    @PostMapping("/stations")
-    public Station addStation(@Valid @RequestBody Station station) {
-        return stationService.save(station);
+    @PostMapping("/stations/{cityName}")
+    public Station addStation(@Valid @PathVariable String cityName,
+                              @Valid @RequestBody Station station) {
+        return stationService.save(station, cityName);
     }
 
     @PutMapping("/stations/{stationId}")
-    public Station updateStation(@PathVariable Long stationId, @Valid @RequestBody Station station) {
+    public Station updateStation(@PathVariable Long stationId,
+                                 @Valid @RequestBody Station station) {
         return stationService.update(stationId, station);
     }
 

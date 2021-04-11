@@ -14,7 +14,8 @@ public interface StationRepository extends JpaRepository<Station, Long> {
     List<Station> findAllByArrTrainIdEquals(Long arrTrain_id);
     List<Station> findAllByDepTrainIdEquals(Long depTrain_id);
     List<Station> findAllByDepTrainIdAndArrTrainIdEquals(Long arrTrain_id, Long depTrain_id);
+    List<Station> findAllByCityIdEquals(Long city_id);
 
-    @Query("select s.city from Station s")
-    List<Object> getStationCities();
+//    @Query("select s.city from Station s")
+//    List<Object> getStationCities();
 }
