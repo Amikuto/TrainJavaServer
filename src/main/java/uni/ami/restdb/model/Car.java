@@ -25,6 +25,9 @@ public class Car extends AuditModel {
     )
     private Long id;
 
+    @Column(columnDefinition = "int")
+    private Integer number;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "car_class")
     @OnDelete(action = OnDeleteAction.NO_ACTION)

@@ -1,9 +1,6 @@
 package uni.ami.restdb.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.OnDelete;
@@ -35,8 +32,8 @@ public class Station extends AuditModel implements Serializable { //Serializable
     @Column(columnDefinition = "text", unique = true)
     private String name;
 
-    @Column(columnDefinition = "text")
-    private String city;
+//    @Column(columnDefinition = "text")
+//    private String city;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -49,6 +46,12 @@ public class Station extends AuditModel implements Serializable { //Serializable
 //    @JsonManagedReference
     @JsonIgnore
     private List<Train> arrTrain;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JsonBackReference
+    @JoinColumn(columnDefinition = "stations")
+    private City city;
 
 //    public String getCity() {
 //        return city;

@@ -24,11 +24,16 @@ public class Seat extends AuditModel {
     )
     private Long id;
 
-    @Column(columnDefinition = "text")
-    private String type; // Upper or lower
-
     @Column(columnDefinition = "int")
     private Integer cost;
+
+    @Column(columnDefinition = "int")
+    private Integer number;
+
+//    @Column(columnDefinition = "text")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private SeatType type;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @JoinColumn(name = "carSeats")
@@ -46,9 +51,13 @@ public class Seat extends AuditModel {
     @Transient
     private Long cId;
 
+    @Transient
+    private String seatType;
+
     @PostLoad
     private void setCarId() {
         this.cId = car.getId();
+        this.seatType = type.getName();
     }
 
 //    public String getType() {
