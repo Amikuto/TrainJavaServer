@@ -8,19 +8,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.model.City;
 import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
+import uni.ami.restdb.repository.CityRepository;
 import uni.ami.restdb.repository.StationRepository;
 import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.TrainService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j //TODO: lombok
 @Service
 public class TrainServiceImpl implements TrainService {
+
+    @Autowired
+    CityRepository cityRepository;
 
     @Autowired
     TrainRepository trainRepository;
@@ -95,22 +103,16 @@ public class TrainServiceImpl implements TrainService {
     }
 
     @Override
-    public List<Train> findAllByArrivingStationAndDepartingStationAndDate(Long depStationId, Long arrStationId, String date) {
+    public List<Train> findAllByArrivingStationAndDepartingStationAndDate(String depStationName, String arrStationName, String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate depDate = LocalDate.parse(date, formatter);
-        List<Train> trainList = trainRepository.findAllByDepStationIdAndArrStationIdAndDateDepEquals(depStationId, arrStationId, depDate);
-        for (Train train : trainList) {
-            train.setDepSt(depStationId);
-            train.setArrSt(arrStationId);
-        }
-        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateDepEquals(depStationId, arrStationId, depDate);
-    }
 
-//    @Override
-//    public List<Train> findAllByArrivingStationAndDepartingStationAndDate(Long depStationId, Long arrStationId, String dare) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-////        formatter = formatter.withLocale( putAppropriateLocaleHere );  // Locale specifies human language for translating, and cultural norms for lowercase/uppercase and abbreviations and such. Example: Locale.US or Locale.CANADA_FRENCH
-//        LocalDate depDate = LocalDate.parse(dare, formatter);
-//        return trainRepository.findAllByDepStationIdAndArrStationIdAndDateArrEquals(depStationId, arrStationId, depDate);
-//    }
+        City depCity = cityRepository.findByNameEquals(depStationName);
+        City arrCity = cityRepository.findByNameEquals(arrStationName);
+
+        List<String> stationDepList = stationRepository.findAllByCityIdEquals(depCity.getId()).stream().map(Station::getName).collect(Collectors.toList());
+        List<String> stationArrList = stationRepository.findAllByCityIdEquals(arrCity.getId()).stream().map(Station::getName).collect(Collectors.toList());
+
+        return trainRepository.findAllByDepStationNameInAndArrStationNameInAndDateDepEquals(stationDepList, stationArrList, depDate);
+    }
 }

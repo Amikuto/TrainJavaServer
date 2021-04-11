@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import uni.ami.restdb.model.Train;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -18,4 +19,6 @@ public interface TrainRepository extends JpaRepository<Train, Long> {
     List<Train> findAllByDepStationIdEquals(Long depStationId);
     List<Train> findAllByArrStationIdEquals(Long arrStationId);
     List<Train> findAllByDepStationIdAndArrStationIdAndDateDepEquals(Long depStationId, Long arrStationId, LocalDate depDate);
+//    List<Train> findAllByDepStationNameAndArrStationNameAndDateDepEquals(List<String> depStation_name, List<String> arrStation_name, LocalDate dateDep);
+    List<Train> findAllByDepStationNameInAndArrStationNameInAndDateDepEquals(Collection<String> depStation_name, Collection<String> arrStation_name, LocalDate dateDep);
 }

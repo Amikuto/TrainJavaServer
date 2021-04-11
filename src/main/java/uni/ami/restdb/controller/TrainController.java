@@ -44,11 +44,11 @@ public class TrainController {
         return trainService.findAllByDepStationId(depStationId);
     }
 
-    @GetMapping("/trains/{depStationId}/{arrStationId}/{depDate}")
-    public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable Long arrStationId,
-                                                              @PathVariable Long depStationId,
+    @GetMapping("/trains/{depStationName}/{arrStationName}/{depDate}")
+    public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable String depStationName,
+                                                              @PathVariable String arrStationName,
                                                               @PathVariable String depDate) {
-        return trainService.findAllByArrivingStationAndDepartingStationAndDate(depStationId, arrStationId, depDate);
+        return trainService.findAllByArrivingStationAndDepartingStationAndDate(depStationName, arrStationName, depDate);
     }
 
     @PostMapping("/trains")
