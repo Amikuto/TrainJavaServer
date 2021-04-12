@@ -32,9 +32,6 @@ public class Station extends AuditModel implements Serializable { //Serializable
     @Column(columnDefinition = "text", unique = true)
     private String name;
 
-//    @Column(columnDefinition = "text")
-//    private String city;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
 //    @JsonManagedReference

@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface StationRepository extends JpaRepository<Station, Long> {
     Long findStationIdByNameEquals(String name);
+    Station findStationByNameEquals(String name);
+    Station findStationByNameAndRegionEquals(String name);
+
     List<Station> findAllByArrTrainIdEquals(Long arrTrain_id);
     List<Station> findAllByDepTrainIdEquals(Long depTrain_id);
     List<Station> findAllByDepTrainIdAndArrTrainIdEquals(Long arrTrain_id, Long depTrain_id);
