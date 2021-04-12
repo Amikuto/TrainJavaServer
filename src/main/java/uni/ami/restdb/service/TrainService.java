@@ -3,11 +3,9 @@ package uni.ami.restdb.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.io.Serializable;
 import java.util.List;
 
 public interface TrainService {

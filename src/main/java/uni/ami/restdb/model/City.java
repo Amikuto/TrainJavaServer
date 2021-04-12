@@ -27,21 +27,18 @@ public class City {
     @Column(columnDefinition = "text")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JsonBackReference
-    @JoinColumn(columnDefinition = "cities")
-    private Region region;
+//    @Column(columnDefinition = "text")
+//    private String region;
+
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @OnDelete(action = OnDeleteAction.NO_ACTION)
+//    @JsonBackReference
+//    @JoinColumn(columnDefinition = "cities")
+//    private Region region;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonManagedReference
     private List<Station> stations;
-
-//    public Long getId() {
-//        return id;
-//    }
-
-
 
 }

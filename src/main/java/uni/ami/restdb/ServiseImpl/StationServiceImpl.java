@@ -86,4 +86,8 @@ public class StationServiceImpl implements StationService {
     public Long getStationIdByName(String name){
         return stationRepository.findStationIdByNameEquals(name);
     }
+
+    public List<Station> getStationsByCityName(String cityName) {
+        return stationRepository.findAllByCity_NameEquals(cityName);
+    }
 }

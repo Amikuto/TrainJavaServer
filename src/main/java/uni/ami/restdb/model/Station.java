@@ -57,47 +57,4 @@ public class Station extends AuditModel implements Serializable { //Serializable
     private void setCityName() {
         this.cityName = city.getName();
     }
-
-//    public String getCity() {
-//        return city;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    @JsonManagedReference
-//    public List<Train> getDepTrain() {
-//        return depTrain;
-//    }
-//
-//    @JsonManagedReference
-//    public List<Train> getArrTrain() {
-//        return arrTrain;
-//    }
-//
-//    public void setCity(String city) {
-//        this.city = city;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setDepTrain(List<Train> depTrain) {
-//        this.depTrain = depTrain;
-//    }
-//
-//    public void setArrTrain(List<Train> arrTrain) {
-//        this.arrTrain = arrTrain;
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Station{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", city='" + city + '\'' +
-//                '}';
-//    }
 }

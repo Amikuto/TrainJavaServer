@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uni.ami.restdb.ServiseImpl.StationServiceImpl;
+import uni.ami.restdb.model.City;
 import uni.ami.restdb.model.Station;
 import uni.ami.restdb.repository.StationRepository;
 
@@ -31,7 +32,6 @@ public class StationController {
         return stationService.getStationById(stationId);
     }
 
-    //TODO: выводит только 1 строку, понять почему и пофиксить... А мне это вообще нужно???
     @GetMapping("/stations/{departingStationId}/{arrivingStationId}")
     public List<Station> getStationsByDepartingAndArrivingTrains(@PathVariable Long arrivingStationId,
                                                                  @PathVariable Long departingStationId){
@@ -51,10 +51,10 @@ public class StationController {
         return stationService.getAllByArrivingTrains(arrivingStationId);
     }
 
-//    @GetMapping("/stations/city")
-//    public List<Object> getCity() {
-//        return stationService.getStationCities();
-//    }
+    @GetMapping("/stations/{cityName}/city")
+    public List<Station> getStationsByCity(@Valid @PathVariable String cityName) {
+        return stationService.getStationsByCityName(cityName);
+    }
 
     @PostMapping("/stations/{cityName}")
     public Station addStation(@Valid @PathVariable String cityName,

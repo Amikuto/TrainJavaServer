@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.City;
 import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
@@ -16,10 +17,9 @@ import uni.ami.restdb.repository.StationRepository;
 import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.TrainService;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,13 +38,26 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train save(Train train) {
-        Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
-        Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
+//        Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
+//        Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
+
+//        Station stationArrival = stationRepository.findStationByNameEquals(train.getArrSt());
+//        Station stationDeparting = stationRepository.findStationByNameEquals(train.getArrSt());
+
+        Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
+        Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
+
+//        if (stationArrival == null | stationDeparting == null){
+//            return new Exception();
+//        }
+
+        train.setDepStation(stationDeparting);
+        train.setDepSt(stationDeparting.getName());
+        train.setDepartingCity(stationDeparting.getCityName());
 
         train.setArrStation(stationArrival);
-        train.setArrSt(stationArrival.getId());
-        train.setDepStation(stationDepartment);
-        train.setDepSt(stationDepartment.getId());
+        train.setArrSt(stationArrival.getName());
+        train.setArrivalCity(stationArrival.getCityName());
 
         return trainRepository.save(train);
     }
@@ -65,13 +78,28 @@ public class TrainServiceImpl implements TrainService {
                     train_temp.setTimeDep(train.getTimeDep());
                     train_temp.setTimeArr(train.getTimeArr());
 
-                    Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
-                    Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
+//                    Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
+//                    Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
+//
+//                    train_temp.setArrStation(stationArrival);
+//                    train_temp.setArrSt(stationArrival.getId());
+//                    train_temp.setDepStation(stationDepartment);
+//                    train_temp.setDepSt(stationDepartment.getId());
+
+                    Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
+                    Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
+
+//                    if (stationArrival == null | stationDeparting == null){
+//                        return new Exception();
+//                    }
+
+                    train_temp.setDepStation(stationDeparting);
+                    train_temp.setDepSt(stationDeparting.getName());
+                    train_temp.setDepartingCity(stationDeparting.getCityName());
 
                     train_temp.setArrStation(stationArrival);
-                    train_temp.setArrSt(stationArrival.getId());
-                    train_temp.setDepStation(stationDepartment);
-                    train_temp.setDepSt(stationDepartment.getId());
+                    train_temp.setArrSt(stationArrival.getName());
+                    train_temp.setArrivalCity(stationArrival.getCityName());
 
                     return trainRepository.save(train_temp);
                 }).orElseThrow(FindException::new);

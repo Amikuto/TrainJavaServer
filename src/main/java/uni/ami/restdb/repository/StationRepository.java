@@ -12,12 +12,13 @@ import java.util.List;
 public interface StationRepository extends JpaRepository<Station, Long> {
     Long findStationIdByNameEquals(String name);
     Station findStationByNameEquals(String name);
-    Station findStationByNameAndRegionEquals(String name);
+    Station findStationByNameEqualsAndCity_NameEquals(String name, String city_name);
 
     List<Station> findAllByArrTrainIdEquals(Long arrTrain_id);
     List<Station> findAllByDepTrainIdEquals(Long depTrain_id);
     List<Station> findAllByDepTrainIdAndArrTrainIdEquals(Long arrTrain_id, Long depTrain_id);
     List<Station> findAllByCityIdEquals(Long city_id);
+    List<Station> findAllByCity_NameEquals(String cityName);
 
 //    @Query("select s.city from Station s")
 //    List<Object> getStationCities();

@@ -30,10 +30,6 @@ public class Train extends AuditModel {
     )
     private Long id;
 
-//    public Long getId() {
-//        return id;
-//    }
-
     @Column(columnDefinition = "date")
     private LocalDate dateDep;
 
@@ -48,7 +44,6 @@ public class Train extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JoinColumn(name = "dep_staion_id")
     @JsonIgnore
 //    @JsonBackReference
     @JoinColumn(columnDefinition = "depTrain")
@@ -56,7 +51,6 @@ public class Train extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JoinColumn(name = "arr_staion_id")
     @JsonIgnore
 //    @JsonBackReference
     @JoinColumn(columnDefinition = "arrTrain")
@@ -68,136 +62,22 @@ public class Train extends AuditModel {
     private List<Car> cars;
 
     @Transient // Чтобы строка не создавалась в бд
-//    @Query("SELECT t FROM t Station WHERE e")
-    private Long arrSt;
+    private String arrSt;
 
     @Transient
-    private Long depSt;
+    private String depSt;
+
+    @Transient
+    private String arrivalCity;
+
+    @Transient
+    private String departingCity;
 
     @PostLoad
     private void setArrAndDepSt() {
-        this.depSt = depStation.getId();
-        this.arrSt = arrStation.getId();
+        this.depSt = depStation.getName();
+        this.arrSt = arrStation.getName();
+        this.departingCity = depStation.getCityName();
+        this.arrivalCity = arrStation.getCityName();
     }
-
-//    @PostLoad
-//    private void setDepSt() {
-//    }
-
-//    public List<Car> getCars() {
-//        return cars;
-//    }
-//
-//    public LocalTime getTime_arr() {
-//        return time_arr;
-//    }
-//
-//    public LocalTime getTime_dep() {
-//        return time_dep;
-//    }
-//
-//    public LocalDate getDate_arr() {
-//        return date_arr;
-//    }
-//
-//    public LocalDate getDate_dep() {
-//        return date_dep;
-//    }
-//
-//    @JsonBackReference
-//    public Station getArrStation() {
-//        return arrStation;
-//    }
-//
-//    @JsonBackReference
-//    public Station getDepStation() {
-//        return depStation;
-//    }
-//
-//    public Long getArrSt() {
-//        return arrSt;
-//    }
-//
-//    public Long getDepSt() {
-//        return depSt;
-//    }
-//
-//    public void setTime_arr(LocalTime time_arr) {
-//        this.time_arr = time_arr;
-//    }
-//
-//    public void setTime_dep(LocalTime time_dep) {
-//        this.time_dep = time_dep;
-//    }
-//
-//    public void setDate_arr(LocalDate date_arr) {
-//        this.date_arr = date_arr;
-//    }
-//
-//    public void setDate_dep(LocalDate date_dep) {
-//        this.date_dep = date_dep;
-//    }
-//
-//    public void setArrStation(Station arrStation) {
-//        this.arrStation = arrStation;
-//    }
-//
-//    public void setDepStation(Station depStation) {
-//        this.depStation = depStation;
-//    }
-//
-//    public void setCars(List<Car> cars) {
-//        this.cars = cars;
-//    }
-//
-//    public void setDepSt(Long depSt) {
-//        this.depSt = depSt;
-//    }
-//
-//    public void setArrSt(Long arrSt) {
-//        this.arrSt = arrSt;
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "Train{" +
-//                "id=" + id +
-//                ", time_arr=" + time_arr +
-//                ", time_dep=" + time_dep +
-//                ", date_arr=" + date_arr +
-//                ", date_dep=" + date_dep +
-////                ", arrStation=" + arrStation +
-////                ", depStation=" + depStation +
-////                ", cars=" + cars +
-//                ", arrSt=" + arrSt +
-//                ", depSt=" + depSt +
-//                '}';
-//    }
-
-    //    @Override
-//    public String toString() {
-//        return "Train{" +
-//                "id=" + id +
-//                ", time_arr=" + time_arr +
-//                ", time_dep=" + time_dep +
-//                ", date_arr=" + date_arr +
-//                ", date_dep=" + date_dep +
-//                ", arrStation=" + arrStation +
-//                ", depStation=" + depStation +
-//                ", arrSt=" + arrSt +
-//                ", depSt=" + depSt +
-//                '}';
-//    }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (!(o instanceof Station )) return false;
-//        return id != null && id.equals(((Station) o).getId());
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
 }
