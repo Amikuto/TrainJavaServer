@@ -24,7 +24,7 @@ public class City {
     )
     private Long id;
 
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "text", unique = true)
     private String name;
 
 //    @Column(columnDefinition = "text")
