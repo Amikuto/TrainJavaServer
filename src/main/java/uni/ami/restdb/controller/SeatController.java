@@ -56,7 +56,7 @@ public class SeatController {
         return seatService.update(seatId, seat);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/seats/{seatId}")
     public ResponseEntity<?> deleteSeat(@Valid @PathVariable Long seatId) {
         return seatService.delete(seatId);
     }

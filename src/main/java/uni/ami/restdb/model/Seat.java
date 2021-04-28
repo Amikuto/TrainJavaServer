@@ -49,7 +49,7 @@ public class Seat extends AuditModel {
     @JsonBackReference
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
 //    @JoinColumn(name = "ticketId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
