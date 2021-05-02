@@ -1,9 +1,7 @@
-package uni.ami.restdb.ServiseImpl;
+package uni.ami.restdb.serviseImpl;
 
 import org.junit.jupiter.api.Test;
 import uni.ami.restdb.model.Station;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StationServiceImplTest {
 

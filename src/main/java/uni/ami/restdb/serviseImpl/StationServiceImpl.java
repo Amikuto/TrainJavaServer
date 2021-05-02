@@ -1,4 +1,4 @@
-package uni.ami.restdb.ServiseImpl;
+package uni.ami.restdb.serviseImpl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +10,13 @@ import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
 import uni.ami.restdb.model.City;
 import uni.ami.restdb.model.Station;
-import uni.ami.restdb.model.Train;
 import uni.ami.restdb.repository.CityRepository;
 import uni.ami.restdb.repository.StationRepository;
-import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.StationService;
-import uni.ami.restdb.service.TrainService;
 
 import java.util.List;
 
-@Slf4j //TODO: lombok
+@Slf4j
 @Service
 public class StationServiceImpl implements StationService {
 

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uni.ami.restdb.ServiseImpl.CityServiceImpl;
+import uni.ami.restdb.serviseImpl.CityServiceImpl;
 import uni.ami.restdb.model.City;
 
 import javax.validation.Valid;

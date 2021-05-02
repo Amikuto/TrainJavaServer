@@ -1,4 +1,4 @@
-package uni.ami.restdb.ServiseImpl;
+package uni.ami.restdb.serviseImpl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.Car;
 import uni.ami.restdb.model.CarClass;
 import uni.ami.restdb.model.CarType;
@@ -20,7 +21,6 @@ import uni.ami.restdb.service.CarService;
 
 import java.util.List;
 
-//TODO: lombok
 @Slf4j
 @Service
 public class CarServiceImpl implements CarService {
@@ -38,16 +38,22 @@ public class CarServiceImpl implements CarService {
     CarClassRepository carClassRepository;
 
     @Override
-    public Car save(Car car) {
-        Train train = trainRepository.findById(car.getTId()).orElseThrow(FindException::new);
-        CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
-        CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+    public Car save(Car car) throws ResourceNotFoundException {
+        Train train = trainRepository.findById(car.getTId()).orElseThrow(() -> new ResourceNotFoundException("error"));
         car.setTrain(train);
         car.setTId(train.getId());
-        car.setCarClass(carClass);
-        car.setCClass(carClass.getName());
-        car.setCarType(carType);
-        car.setCType(carType.getName());
+
+        try {
+            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+            car.setCarClass(carClass);
+            car.setCClass(carClass.getName());
+
+            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+            car.setCarType(carType);
+            car.setCType(carType.getName());
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException("error");
+        }
         return carRepository.save(car);
     }
 
@@ -62,16 +68,43 @@ public class CarServiceImpl implements CarService {
     public Car update(Long id, Car car) {
         return carRepository.findById(id)
                 .map(car_temp -> {
+//                    if (car.getCClass() != null) {
+//                        try {
+//                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+//                            car.setCarClass(carClass);
+//                            car.setCClass(carClass.getName());
+//                        } catch (NullPointerException e) {
+//                            throw new ResourceNotFoundException("error");
+//                        }
+//                    }
+//
+//                    if (car.getCType() != null) {
+//                        try {
+//                            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+//                            car.setCarType(carType);
+//                            car.setCType(carType.getName());
+//                        } catch (NullPointerException e) {
+//                            throw new ResourceNotFoundException("error");
+//                        }
+//                    }
                     if (car.getCClass() != null) {
-                        CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
-                        car_temp.setCarClass(carClass);
-                        car_temp.setCClass(carClass.getName());
+                        try {
+                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+                            car_temp.setCarClass(carClass);
+                            car_temp.setCClass(carClass.getName());
+                        } catch (NullPointerException e) {
+                            throw new ResourceNotFoundException("error");
+                        }
                     }
 
                     if (car.getCType() != null) {
-                        CarType carType = carTypeRepository.findByNameEquals(car.getCType());
-                        car_temp.setCarType(carType);
-                        car_temp.setCType(carType.getName());
+                        try {
+                            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+                            car_temp.setCarType(carType);
+                            car_temp.setCType(carType.getName());
+                        } catch (NullPointerException e) {
+                            throw new ResourceNotFoundException("error");
+                        }
                     }
 
                     if (car.getNumber() != null) {
@@ -84,7 +117,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car getCarById(Long id) {
-        return carRepository.findById(id).orElseThrow(FindException::new);
+        return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("error"));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package uni.ami.restdb.ServiseImpl;
+package uni.ami.restdb.serviseImpl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import uni.ami.restdb.service.SeatService;
 
 import java.util.List;
 
-@Slf4j //TODO: lombok
+@Slf4j
 @Service
 public class SeatServiceImpl implements SeatService {
 

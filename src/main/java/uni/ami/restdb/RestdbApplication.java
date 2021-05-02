@@ -3,11 +3,12 @@ package uni.ami.restdb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.Entity;
 
 @SpringBootApplication
-@EnableJpaAuditing  // Аудит БД
+@EnableJpaAuditing
 public class RestdbApplication {
 
     public static void main(String[] args) {

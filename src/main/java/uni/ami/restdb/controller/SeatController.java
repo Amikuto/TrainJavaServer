@@ -5,12 +5,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uni.ami.restdb.ServiseImpl.SeatServiceImpl;
-import uni.ami.restdb.exceptions.FindException;
-import uni.ami.restdb.model.Car;
+import uni.ami.restdb.serviseImpl.SeatServiceImpl;
 import uni.ami.restdb.model.Seat;
-import uni.ami.restdb.repository.SeatRepository;
-import uni.ami.restdb.service.SeatService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,9 +16,6 @@ public class SeatController {
 
     @Autowired
     SeatServiceImpl seatService;
-
-//    @Autowired
-//    SeatRepository seatRepository;
 
     @GetMapping("/seats")
     public Page<Seat> getAllSeats(Pageable pageable) {

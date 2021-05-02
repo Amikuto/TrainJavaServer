@@ -5,11 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uni.ami.restdb.ServiseImpl.TrainServiceImpl;
+import uni.ami.restdb.serviseImpl.TrainServiceImpl;
 import uni.ami.restdb.model.Train;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -49,6 +48,11 @@ public class TrainController {
                                                               @PathVariable String arrStationName,
                                                               @PathVariable String depDate) {
         return trainService.findAllByArrivingStationAndDepartingStationAndDate(depStationName, arrStationName, depDate);
+    }
+
+    @GetMapping("/trains/data/year-statistic/{date}")
+    public List<Train> findAllByYearDep(@PathVariable String date) {
+        return trainService.findAllByYearDep(date);
     }
 
     @PostMapping("/trains")

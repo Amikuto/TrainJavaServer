@@ -1,9 +1,12 @@
 package uni.ami.restdb.exceptions;
 
-//TODO: разобраться и доделать!!!
-public class FindException extends  RuntimeException{
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public FindException () {
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class FindException extends  RuntimeException {
 
+    public FindException() {
+        super("error");
     }
 }

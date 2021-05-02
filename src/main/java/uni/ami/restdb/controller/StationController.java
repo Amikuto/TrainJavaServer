@@ -5,19 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uni.ami.restdb.ServiseImpl.StationServiceImpl;
-import uni.ami.restdb.model.City;
+import uni.ami.restdb.serviseImpl.StationServiceImpl;
 import uni.ami.restdb.model.Station;
-import uni.ami.restdb.repository.StationRepository;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 public class StationController {
-
-//    @Autowired
-//    private StationRepository stationRepository;
 
     @Autowired
     private StationServiceImpl stationService;

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import uni.ami.restdb.ServiseImpl.CarServiceImpl;
+import uni.ami.restdb.serviseImpl.CarServiceImpl;
 import uni.ami.restdb.model.Car;
 
 import javax.validation.Valid;
@@ -13,15 +13,6 @@ import java.util.List;
 
 @RestController
 public class CarController {
-
-//    @Autowired
-//    private TrainRepository trainRepository;
-//
-//    @Autowired
-//    private CarRepository carRepository;
-//
-//    @Autowired
-//    private StationRepository stationRepository;
 
     @Autowired
     private CarServiceImpl carService;

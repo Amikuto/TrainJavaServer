@@ -1,4 +1,4 @@
-package uni.ami.restdb.ServiseImpl;
+package uni.ami.restdb.serviseImpl;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

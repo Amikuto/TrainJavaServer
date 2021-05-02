@@ -54,7 +54,6 @@ public class Car extends AuditModel {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     @OnDelete(action = OnDeleteAction.CASCADE)
-//    @JsonIgnore
     @JsonManagedReference
     private List<Seat> seats;
 
@@ -73,42 +72,4 @@ public class Car extends AuditModel {
         this.cType = carType.getName();
         this.tId = train.getId();
     }
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public CarClass getCarClass() {
-//        return carClass;
-//    }
-//
-//    public CarType getCarType() {
-//        return carType;
-//    }
-//
-//    public Train getTrain() {
-//        return train;
-//    }
-//
-//    public void setCarClass(CarClass carClass) {
-//        this.carClass = carClass;
-//    }
-//
-//    public void setCarType(CarType carType) {
-//        this.carType = carType;
-//    }
-//
-//    public void setTrain(Train train) {
-//        this.train = train;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Car{" +
-//                "id=" + id +
-//                ", carClass=" + carClass +
-//                ", carType=" + carType +
-//                ", train=" + train +
-//                '}';
-//    }
 }
