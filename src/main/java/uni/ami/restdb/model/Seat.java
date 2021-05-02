@@ -11,6 +11,10 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
+/**
+ * Сущность мест (сидений) в базе данных
+ * @author damir
+ */
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
@@ -21,6 +25,9 @@ import javax.persistence.*;
 @Table(name = "seat")
 public class Seat extends AuditModel {
 
+    /**
+     * Поле Id сущности
+     */
     @Id
     @GeneratedValue(generator = "seat_generator")
     @SequenceGenerator(
@@ -30,27 +37,41 @@ public class Seat extends AuditModel {
     )
     private Long id;
 
+    /**
+     * Поле стоимости сущности места
+     */
     @Column(columnDefinition = "int")
     private Integer cost;
 
+    /**
+     * Поле номера сущности места в вагоне
+     */
     @Column(columnDefinition = "int")
     private Integer number;
 
-//    @Column(columnDefinition = "text")
+    /**
+     * Поле внешней связи между сущностью место и его типом (верхнее\нижнее)
+     * представляется в виде класса SeatType {@link SeatType}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private SeatType type;
 
+    /**
+     * Поле внешней связи между сущностью место и вагоном, в котором оно находится
+     * представляется в виде класса Car {@link Car}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "carSeats")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonIgnore
     @JsonBackReference
     private Car car;
 
+    /**
+     * Опциональное поле внешней связи между сущностью место и билетом
+     * представляется в виде класса Ticket {@link Ticket}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-//    @JoinColumn(name = "ticketId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Ticket ticket;
@@ -66,47 +87,4 @@ public class Seat extends AuditModel {
         this.cId = car.getId();
         this.seatType = type.getName();
     }
-
-//    public String getType() {
-//        return type;
-//    }
-//
-//    public Integer getCost() {
-//        return cost;
-//    }
-//
-//    public Car getCar() {
-//        return car;
-//    }
-//
-//    public Ticket getTicket() {
-//        return ticket;
-//    }
-//
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-//
-//    public void setCost(Integer cost) {
-//        this.cost = cost;
-//    }
-//
-//    public void setCar(Car car) {
-//        this.car = car;
-//    }
-//
-//    public void setTicket(Ticket ticket) {
-//        this.ticket = ticket;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Seat{" +
-//                "id=" + id +
-//                ", type='" + type + '\'' +
-//                ", cost=" + cost +
-//                ", car=" + car +
-//                ", ticket=" + ticket +
-//                '}';
-//    }
 }

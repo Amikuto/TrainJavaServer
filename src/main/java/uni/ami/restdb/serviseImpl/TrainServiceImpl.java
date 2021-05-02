@@ -39,10 +39,6 @@ public class TrainServiceImpl implements TrainService {
         Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
         Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
 
-//        if (stationArrival == null | stationDeparting == null){
-//            return new Exception();
-//        }
-
         train.setDepStation(stationDeparting);
         train.setDepSt(stationDeparting.getName());
         train.setDepartingCity(stationDeparting.getCityName());
@@ -72,10 +68,6 @@ public class TrainServiceImpl implements TrainService {
 
                     Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
                     Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
-
-//                    if (stationArrival == null | stationDeparting == null){
-//                        return new Exception();
-//                    }
 
                     train_temp.setDepStation(stationDeparting);
                     train_temp.setDepSt(stationDeparting.getName());
