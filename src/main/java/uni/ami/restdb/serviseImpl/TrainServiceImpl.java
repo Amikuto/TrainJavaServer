@@ -151,7 +151,6 @@ public class TrainServiceImpl implements TrainService {
         ticketsData.put("notSoldTickets", notSoldTickets);
         ticketsData.put("allTickets", allTickets);
 
-        String json = mapper.writeValueAsString(ticketsData);
-        return json;
+        return mapper.writeValueAsString(ticketsData);
     }
 }

@@ -1,6 +1,7 @@
 package uni.ami.restdb.serviseImpl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(User user) {
+        String hashPasswd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+        user.setPassword(hashPasswd);
         return userRepository.save(user);
     }
 
@@ -42,7 +45,8 @@ public class UserServiceImpl implements UserService{
                     user_temp.setFullName(user.getFullName());
                     user_temp.setLogin(user.getLogin());
                     user_temp.setEmail(user.getEmail());
-                    user_temp.setPassword(user.getPassword());
+                    String hashPasswd = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+                    user.setPassword(hashPasswd);
 
                     return save(user_temp);
                 }).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!"));
@@ -54,17 +58,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String getPasswordByUsersId(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!")).getPassword();
-    }
-
-    @Override
     public Page<User> getAll(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 
-    public boolean checkCorrectUser(String userLogin, Map<String, String> givenPassword) {
+//    @Override
+//    public String getPasswordByUsersId(Long id) {
+//        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!")).getPassword();
+//    }
+
+    public boolean checkUserPassword(String userLogin, Map<String, String> givenPassword) {
         String userPassword = userRepository.findByLogin(userLogin).getPassword();
-        return userPassword.equals(givenPassword.get("password"));
+        return BCrypt.checkpw(givenPassword.get("password"), userPassword);
     }
 }

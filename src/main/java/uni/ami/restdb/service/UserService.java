@@ -16,7 +16,7 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    String getPasswordByUsersId(Long id);
+//    String getPasswordByUsersId(Long id);
 
     Page<User> getAll(Pageable pageable);
 }
