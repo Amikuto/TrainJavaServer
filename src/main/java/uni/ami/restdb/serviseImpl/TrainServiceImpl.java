@@ -1,5 +1,8 @@
 package uni.ami.restdb.serviseImpl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +22,7 @@ import uni.ami.restdb.service.TrainService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -133,6 +136,22 @@ public class TrainServiceImpl implements TrainService {
     }
 
     public List<Train> findAllByYearDep(String date) {
-        return  trainRepository.findAllByDateDepIsLike(date);
+        return trainRepository.findAllByDateDepIsLike(date);
+    }
+
+    public String valueTicketsDataByTrainId(Long trainId) throws JsonProcessingException {
+        Long soldTickets = trainRepository.valueOfSoldTicketsByTrainId(trainId);
+        Long notSoldTickets = trainRepository.valueOfNotSoldTicketsByTrainId(trainId);
+        Long allTickets = trainRepository.valueOfAllTicketsByTrainId(trainId);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Map<String, Long> ticketsData = new HashMap<>();
+        ticketsData.put("soldTickets", soldTickets);
+        ticketsData.put("notSoldTickets", notSoldTickets);
+        ticketsData.put("allTickets", allTickets);
+
+        String json = mapper.writeValueAsString(ticketsData);
+        return json;
     }
 }

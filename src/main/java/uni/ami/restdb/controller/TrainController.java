@@ -1,5 +1,6 @@
 package uni.ami.restdb.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -53,6 +54,11 @@ public class TrainController {
     @GetMapping("/trains/data/year-statistic/{date}")
     public List<Train> findAllByYearDep(@PathVariable String date) {
         return trainService.findAllByYearDep(date);
+    }
+
+    @GetMapping("/trains/data/train-tickets-data/{trainId}")
+    public String valueTicketsDataByTrainId(@PathVariable Long trainId) throws JsonProcessingException {
+        return trainService.valueTicketsDataByTrainId(trainId);
     }
 
     @PostMapping("/trains")
