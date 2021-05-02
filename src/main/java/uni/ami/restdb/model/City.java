@@ -10,11 +10,18 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Сущность городов в базе данных
+ * @author damir
+ */
 @Data
 @Entity
 @Table(name = "city")
 public class City {
 
+    /**
+     * Поле Id сущности
+     */
     @Id
     @GeneratedValue(generator = "city_generator")
     @SequenceGenerator(
@@ -24,11 +31,11 @@ public class City {
     )
     private Long id;
 
+    /**
+     * Поле имени города
+     */
     @Column(columnDefinition = "text", unique = true)
     private String name;
-
-//    @Column(columnDefinition = "text")
-//    private String region;
 
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
 //    @OnDelete(action = OnDeleteAction.NO_ACTION)
@@ -36,9 +43,12 @@ public class City {
 //    @JoinColumn(columnDefinition = "cities")
 //    private Region region;
 
+    /**
+     * Поле внешней связи между сущностью город и станциями, которые он в себе содержит.
+     * представляется в виде списка станций {@link Station}
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "city", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonManagedReference
     private List<Station> stations;
-
 }

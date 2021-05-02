@@ -38,18 +38,8 @@ public class TrainServiceImpl implements TrainService {
 
     @Override
     public Train save(Train train) {
-//        Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
-//        Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
-
-//        Station stationArrival = stationRepository.findStationByNameEquals(train.getArrSt());
-//        Station stationDeparting = stationRepository.findStationByNameEquals(train.getArrSt());
-
         Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
         Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
-
-//        if (stationArrival == null | stationDeparting == null){
-//            return new Exception();
-//        }
 
         train.setDepStation(stationDeparting);
         train.setDepSt(stationDeparting.getName());
@@ -78,20 +68,8 @@ public class TrainServiceImpl implements TrainService {
                     train_temp.setTimeDep(train.getTimeDep());
                     train_temp.setTimeArr(train.getTimeArr());
 
-//                    Station stationArrival = stationRepository.findById(train.getArrSt()).orElseThrow(FindException::new);
-//                    Station stationDepartment = stationRepository.findById(train.getDepSt()).orElseThrow(FindException::new);
-//
-//                    train_temp.setArrStation(stationArrival);
-//                    train_temp.setArrSt(stationArrival.getId());
-//                    train_temp.setDepStation(stationDepartment);
-//                    train_temp.setDepSt(stationDepartment.getId());
-
                     Station stationDeparting = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getDepSt(), train.getDepartingCity());
                     Station stationArrival = stationRepository.findStationByNameEqualsAndCity_NameEquals(train.getArrSt(), train.getArrivalCity());
-
-//                    if (stationArrival == null | stationDeparting == null){
-//                        return new Exception();
-//                    }
 
                     train_temp.setDepStation(stationDeparting);
                     train_temp.setDepSt(stationDeparting.getName());

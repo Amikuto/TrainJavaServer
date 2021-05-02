@@ -10,6 +10,10 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Абстрактный класс аудирования, который добавляет поля даты создания и обновления записи в базе данных
+ * @author damir
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(
@@ -18,10 +22,16 @@ import java.util.Date;
 )
 public abstract class AuditModel implements Serializable {
 
+    /**
+     * Поле даты создания
+     */
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
     private Date createdAt;
 
+    /**
+     * Поле даты обновления
+     */
     @Column(name = "updated_at", nullable = false, updatable = false)
     @CreatedDate
     private Date updatedAt;
