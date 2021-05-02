@@ -1,5 +1,6 @@
 package uni.ami.restdb.repository;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,11 +28,14 @@ public interface TrainRepository extends JpaRepository<Train, Long> {
     List<Train> findAllByDateDepIsLike(@Param("year") String date);
 
     @Query(value = "SELECT count(s) FROM seat s JOIN car ca ON s.car_id = ca.id WHERE ca.train_id = :trainId AND s.ticket_id IS NULL", nativeQuery = true)
-    Long valueOfNotSoldTicketsByTrainId(@Param("trainId") Long trainId);
+    Integer valueOfNotSoldTicketsByTrainId(@Param("trainId") Long trainId);
 
     @Query(value = "SELECT count(s) FROM seat s JOIN car ca ON s.car_id = ca.id WHERE ca.train_id = :trainId AND s.ticket_id IS NOT NULL", nativeQuery = true)
-    Long valueOfSoldTicketsByTrainId(@Param("trainId") Long trainId);
+    Integer valueOfSoldTicketsByTrainId(@Param("trainId") Long trainId);
 
     @Query(value = "SELECT count(s) FROM seat s JOIN car ca ON s.car_id = ca.id WHERE ca.train_id = :trainId", nativeQuery = true)
-    Long valueOfAllTicketsByTrainId(@Param("trainId") Long trainId);
+    Integer valueOfAllTicketsByTrainId(@Param("trainId") Long trainId);
+
+    @Query(value = "SELECT COUNT(*) FROM Train WHERE TO_CHAR(date_dep, 'YYYY-mm-dd') LIKE :year%", nativeQuery = true)
+    Integer findCountOfTrainsByDateDepIsLike(@Param("year") String date);
 }

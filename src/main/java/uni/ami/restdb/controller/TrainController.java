@@ -1,9 +1,12 @@
 package uni.ami.restdb.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jdk.jfr.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uni.ami.restdb.serviseImpl.TrainServiceImpl;
@@ -44,7 +47,7 @@ public class TrainController {
         return trainService.findAllByDepStationId(depStationId);
     }
 
-    @GetMapping("/trains/{depStationName}/{arrStationName}/{depDate}")
+    @GetMapping("/trains/search/{depStationName}/{arrStationName}/{depDate}")
     public List<Train> getTrainsByDepartingAndArrivingStation(@PathVariable String depStationName,
                                                               @PathVariable String arrStationName,
                                                               @PathVariable String depDate) {
@@ -56,9 +59,24 @@ public class TrainController {
         return trainService.findAllByYearDep(date);
     }
 
-    @GetMapping("/trains/data/train-tickets-data/{trainId}")
-    public String valueTicketsDataByTrainId(@PathVariable Long trainId) throws JsonProcessingException {
-        return trainService.valueTicketsDataByTrainId(trainId);
+    @GetMapping("/trains/data/year-statistic-count/{date}")
+    public Integer findCountOfTrainsByDateDepIsLike(@PathVariable String date) {
+        return trainService.findCountOfTrainsByDateDepIsLike(date);
+    }
+
+    @GetMapping(value = "/trains/data/train-sold-tickets-data/{trainId}")
+    public Integer valueOfSoldTicketsDataByTrainId(@PathVariable Long trainId) {
+        return trainService.valueOfSoldTicketsDataByTrainId(trainId);
+    }
+
+    @GetMapping(value = "/trains/data/train-notsold-tickets-data/{trainId}")
+    public Integer valueOfNotSoldTicketsDataByTrainId(@PathVariable Long trainId) {
+        return trainService.valueOfNotSoldTicketsDataByTrainId(trainId);
+    }
+
+    @GetMapping(value = "/trains/data/train-all-tickets-data/{trainId}")
+    public Integer valueOfAllTicketsDataByTrainId(@PathVariable Long trainId) {
+        return trainService.valueOfAllTicketsDataByTrainId(trainId);
     }
 
     @PostMapping("/trains")
