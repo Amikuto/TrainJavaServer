@@ -35,9 +35,6 @@ public class StationController {
 
     @GetMapping("/stations/{departingStationId}/0")
     public List<Station> getStationsByDepartingTrains(@PathVariable Long departingStationId){
-//        System.out.println(departingStationId);
-//        Station station = stationRepository.findById(departingStationId).get();
-//        System.out.println(station);
         return stationService.getAllByDepartingTrains(departingStationId);
     }
 

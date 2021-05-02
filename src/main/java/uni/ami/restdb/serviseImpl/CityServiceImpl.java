@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.City;
 import uni.ami.restdb.repository.CityRepository;
 import uni.ami.restdb.service.CityService;
@@ -26,7 +27,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        City city = cityRepository.findById(id).orElseThrow(FindException::new);
+        City city = cityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Город с заданным id не найден!"));
         cityRepository.delete(city);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -35,16 +36,17 @@ public class CityServiceImpl implements CityService {
     public City update(Long id, City city) {
         return cityRepository.findById(id)
                 .map(city_temp -> {
-                    city_temp.setName(city.getName());
-                    city_temp.setStations(city.getStations());
+                    if (city.getName() != null) {
+                        city_temp.setName(city.getName());
+                    }
 
                     return cityRepository.save(city_temp);
-                }).orElseThrow(FindException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("Город с заданным id не найден!"));
     }
 
     @Override
     public City getCityById(Long id) {
-        return cityRepository.findById(id).orElseThrow(FindException::new);
+        return cityRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Город с заданным id не найден!"));
     }
 
     @Override

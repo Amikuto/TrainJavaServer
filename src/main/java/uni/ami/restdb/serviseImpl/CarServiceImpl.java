@@ -68,25 +68,6 @@ public class CarServiceImpl implements CarService {
     public Car update(Long id, Car car) {
         return carRepository.findById(id)
                 .map(car_temp -> {
-//                    if (car.getCClass() != null) {
-//                        try {
-//                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
-//                            car.setCarClass(carClass);
-//                            car.setCClass(carClass.getName());
-//                        } catch (NullPointerException e) {
-//                            throw new ResourceNotFoundException("error");
-//                        }
-//                    }
-//
-//                    if (car.getCType() != null) {
-//                        try {
-//                            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
-//                            car.setCarType(carType);
-//                            car.setCType(carType.getName());
-//                        } catch (NullPointerException e) {
-//                            throw new ResourceNotFoundException("error");
-//                        }
-//                    }
                     if (car.getCClass() != null) {
                         try {
                             CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());

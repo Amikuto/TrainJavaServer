@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.User;
 import uni.ami.restdb.repository.UserRepository;
 import uni.ami.restdb.service.UserService;
@@ -44,17 +45,17 @@ public class UserServiceImpl implements UserService{
                     user_temp.setPassword(user.getPassword());
 
                     return save(user_temp);
-                }).orElseThrow(FindException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!"));
     }
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(FindException::new);
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!"));
     }
 
     @Override
     public String getPasswordByUsersId(Long id) {
-        return userRepository.findById(id).orElseThrow(FindException::new).getPassword();
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!")).getPassword();
     }
 
     @Override
@@ -64,7 +65,6 @@ public class UserServiceImpl implements UserService{
 
     public boolean checkCorrectUser(String userLogin, Map<String, String> givenPassword) {
         String userPassword = userRepository.findByLogin(userLogin).getPassword();
-
         return userPassword.equals(givenPassword.get("password"));
     }
 }

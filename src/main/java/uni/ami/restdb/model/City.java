@@ -37,12 +37,6 @@ public class City {
     @Column(columnDefinition = "text", unique = true)
     private String name;
 
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonBackReference
-//    @JoinColumn(columnDefinition = "cities")
-//    private Region region;
-
     /**
      * Поле внешней связи между сущностью город и станциями, которые он в себе содержит.
      * представляется в виде списка станций {@link Station}

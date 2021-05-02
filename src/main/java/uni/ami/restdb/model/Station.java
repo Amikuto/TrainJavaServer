@@ -11,14 +11,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "station")
-public class Station extends AuditModel implements Serializable { //Serializable?
+public class Station extends AuditModel implements Serializable {
 
     @Id
     @GeneratedValue(generator = "station_generator")
@@ -34,13 +31,11 @@ public class Station extends AuditModel implements Serializable { //Serializable
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonManagedReference
     @JsonIgnore
     private List<Train> depTrain;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-//    @JsonManagedReference
     @JsonIgnore
     private List<Train> arrTrain;
 

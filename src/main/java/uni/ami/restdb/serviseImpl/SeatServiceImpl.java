@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
+import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.Car;
 import uni.ami.restdb.model.Seat;
 import uni.ami.restdb.model.SeatType;
@@ -33,13 +34,21 @@ public class SeatServiceImpl implements SeatService {
 
     @Override
     public Seat save(Seat seat, Long id) {
-        Car car = carRepository.findById(id).orElseThrow(FindException::new);
-        seat.setCar(car);
-        seat.setCId(car.getId());
+        try {
+            Car car = carRepository.findById(id).orElseThrow(FindException::new);
+            seat.setCar(car);
+            seat.setCId(car.getId());
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException("Вагона с заданным id не найдено!");
+        }
 
-        SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
-        seat.setType(seatType);
-        seat.setSeatType(seatType.getName());
+        try {
+            SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
+            seat.setType(seatType);
+            seat.setSeatType(seatType.getName());
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException("Такого типа места не существует!");
+        }
 
         return seatRepository.save(seat);
     }
@@ -56,15 +65,23 @@ public class SeatServiceImpl implements SeatService {
         return seatRepository.findById(id)
                 .map(seat_temp -> {
                     if (seat.getCId() != null) {
-                        Car car = carRepository.findById(seat.getCId()).orElseThrow(FindException::new);
-                        seat_temp.setCar(car);
-                        seat_temp.setCId(car.getId());
+                        try {
+                            Car car = carRepository.findById(id).orElseThrow(FindException::new);
+                            seat.setCar(car);
+                            seat.setCId(car.getId());
+                        } catch (NullPointerException e) {
+                            throw new ResourceNotFoundException("Вагона с заданным id не найдено!");
+                        }
                     }
 
                     if (seat.getSeatType() != null) {
-                        SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
-                        seat_temp.setType(seatType);
-                        seat_temp.setSeatType(seatType.getName());
+                        try {
+                            SeatType seatType = seatTypeRepository.findByNameEquals(seat.getSeatType());
+                            seat.setType(seatType);
+                            seat.setSeatType(seatType.getName());
+                        } catch (NullPointerException e) {
+                            throw new ResourceNotFoundException("Такого типа места не существует!");
+                        }
                     }
 
                     if (seat.getCost() != null) {
@@ -75,12 +92,12 @@ public class SeatServiceImpl implements SeatService {
                     }
 
                     return seatRepository.save(seat_temp);
-                }).orElseThrow(FindException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("Места с данным id не найдено!"));
     }
 
     @Override
     public Seat getSeatById(Long id) {
-        return seatRepository.findById(id).orElseThrow(FindException::new);
+        return seatRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Места с данным id не найдено!"));
     }
 
     @Override
