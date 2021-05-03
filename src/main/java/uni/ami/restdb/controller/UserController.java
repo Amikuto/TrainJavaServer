@@ -22,6 +22,11 @@ public class UserController {
         return userService.getAll(pageable);
     }
 
+    @GetMapping("/users/{login}")
+    public User getUserByLogin(@PathVariable String login) {
+        return userService.getUserByLogin(login);
+    }
+
     @PostMapping("/users/password/{userLogin}")
     public boolean checkCorrectUser(@PathVariable String userLogin,
                                     @Valid @RequestBody Map<String, String> password) {

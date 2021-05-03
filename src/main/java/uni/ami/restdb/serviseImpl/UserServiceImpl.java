@@ -57,6 +57,10 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Пользователя с заданным id не найдено!"));
     }
 
+    public User getUserByLogin(String login) {
+        return userRepository.findByLoginEquals(login);
+    }
+
     @Override
     public Page<User> getAll(Pageable pageable) {
         return userRepository.findAll(pageable);
