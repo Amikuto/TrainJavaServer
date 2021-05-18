@@ -12,6 +12,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Репозиторий поездов
+ * @author damir
+ */
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Long> {
     List<Train> findAllByDepStationIdAndArrStationId(Long depStation, Long arrStation);

@@ -3,6 +3,10 @@ package uni.ami.restdb.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Класс-обработчик ошибок
+ * @author damir
+ */
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {

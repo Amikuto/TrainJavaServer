@@ -15,18 +15,18 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <name>restdb</name>
-    <description>Demo project for Spring Boot rest application with data base</description>
+    <description>University project for Spring Boot rest application with data base</description>
 
     <properties>
-        <java.version>15</java.version>
+        <java.version>16</java.version>
     </properties>
 
     <dependencies>
-        <!-- lombok -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.16</version>
+            <version>1.18.20</version>
             <scope>provided</scope>
         </dependency>
 
@@ -98,6 +98,10 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

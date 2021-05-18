@@ -12,15 +12,19 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-//@JsonIdentityInfo(
-//        generator = ObjectIdGenerators.PropertyGenerator.class,
-//        property = "id")
+/**
+ * Сущность поездов
+ * @author damir
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "train")
 public class Train extends AuditModel {
 
+    /**
+     * Поле Id сущности
+     */
     @Id
     @GeneratedValue(generator = "train_generator")
     @SequenceGenerator(
@@ -30,32 +34,54 @@ public class Train extends AuditModel {
     )
     private Long id;
 
+    /**
+     * Поле даты отправления поезда в формате LocalDate
+     */
     @Column(columnDefinition = "date")
     private LocalDate dateDep;
 
+    /**
+     * Поле даты прибытия поезда
+     */
     @Column(columnDefinition = "date")
     private LocalDate dateArr;
 
+    /**
+     * Поле времени отправления поезда
+     */
     @Column(columnDefinition = "time")
     private LocalTime timeDep;
 
+    /**
+     * Поле времени прибытия поезда
+     */
     @Column(columnDefinition = "time")
     private LocalTime timeArr;
 
+    /**
+     * Неопциональное поле внешней связи между поездом и станцией отправления
+     * представляется в виде сущности {@link Station}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
-//    @JsonBackReference
     @JoinColumn(columnDefinition = "depTrain")
     private Station depStation;
 
+    /**
+     * Неопциональное поле внешней связи между поездом и станцией прибытия
+     * представляется в виде сущности {@link Station}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
-//    @JsonBackReference
     @JoinColumn(columnDefinition = "arrTrain")
     private Station arrStation;
 
+    /**
+     * Неопциональное поле внешней связи между поездом и вагонами, которые он в себе содержит
+     * представляется в виде списка {@link Car}
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore

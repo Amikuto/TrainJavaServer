@@ -11,12 +11,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Сущность станций
+ * @author damir
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "station")
 public class Station extends AuditModel implements Serializable {
 
+    /**
+     * Поле Id сущности
+     */
     @Id
     @GeneratedValue(generator = "station_generator")
     @SequenceGenerator(
@@ -26,19 +33,34 @@ public class Station extends AuditModel implements Serializable {
     )
     private Long id;
 
-    @Column(columnDefinition = "text", unique = true)
+    /**
+     * Поле имени станции
+     */
+    @Column(columnDefinition = "text", unique = false)
     private String name;
 
+    /**
+     * Неопциональное поле внешней связи между станцией и отправляющимеся поездами, которых она в себе содержит
+     * представляется в виде списка Train {@link Train}
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private List<Train> depTrain;
 
+    /**
+     * Неопциональное поле внешней связи между станцией и прибывающими поездами, которых она в себе содержит
+     * представляется в виде списка Train {@link Train}
+     */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     private List<Train> arrTrain;
 
+    /**
+     * Неопциональное поле внешней связи между станцией и городом, в котором она находится
+     * представляется в виде сущности {@link City}
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonBackReference

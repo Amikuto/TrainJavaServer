@@ -9,9 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uni.ami.restdb.exceptions.FindException;
 import uni.ami.restdb.exceptions.ResourceNotFoundException;
-import uni.ami.restdb.model.Car;
-import uni.ami.restdb.model.Seat;
-import uni.ami.restdb.model.SeatType;
+import uni.ami.restdb.model.*;
 import uni.ami.restdb.repository.CarRepository;
 import uni.ami.restdb.repository.SeatRepository;
 import uni.ami.restdb.repository.SeatTypeRepository;
@@ -19,6 +17,10 @@ import uni.ami.restdb.service.SeatService;
 
 import java.util.List;
 
+/**
+ * Класс сервиса мест
+ * @author damir
+ */
 @Slf4j
 @Service
 public class SeatServiceImpl implements SeatService {
@@ -32,6 +34,12 @@ public class SeatServiceImpl implements SeatService {
     @Autowired
     SeatTypeRepository seatTypeRepository;
 
+    /**
+     * Функция сохранения места в базе данных
+     * @param seat принимает класс места для сохранения {@link Seat}
+     * @param id принимает id вагона для сохранения в нем места {@link Car#id}
+     * @return возвращает сохраненнре место {@link Seat}
+     */
     @Override
     public Seat save(Seat seat, Long id) {
         try {
@@ -53,6 +61,11 @@ public class SeatServiceImpl implements SeatService {
         return seatRepository.save(seat);
     }
 
+    /**
+     * Функция удаления места из базы данных
+     * @param id принимет в качестве параметра id места
+     * @return возвращает HttpStatus.OK {@link ResponseEntity}
+     */
     @Override
     public ResponseEntity<?> delete(Long id) {
         Seat seat = getSeatById(id);
@@ -60,6 +73,12 @@ public class SeatServiceImpl implements SeatService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Функция изменения информации о месте в базе данных
+     * @param id принимет в качестве параметра id места
+     * @param seat принимает класс места для изменения информации {@link Seat}
+     * @return возвращает класс места с измененной информацией {@link Seat}
+     */
     @Override
     public Seat update(Long id, Seat seat) {
         return seatRepository.findById(id)
@@ -95,26 +114,51 @@ public class SeatServiceImpl implements SeatService {
                 }).orElseThrow(() -> new ResourceNotFoundException("Места с данным id не найдено!"));
     }
 
+    /**
+     * Функция поиска места по id
+     * @param id принимет в качестве параметра id места
+     * @return озвращает класс места {@link Seat}
+     */
     @Override
     public Seat getSeatById(Long id) {
         return seatRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Места с данным id не найдено!"));
     }
 
+    /**
+     * Функция поиска всех мест в базе данных
+     * @param pageable
+     * @return возвращает список всех мест в формате Pageable {@link Pageable}
+     */
     @Override
     public Page<Seat> getAll(Pageable pageable) {
         return seatRepository.findAll(pageable);
     }
 
+    /**
+     * Функция поиска всех мест по id вагона
+     * @param id принимает id вагона {@link Car#id}
+     * @return возвращает список мест
+     */
     @Override
     public List<Seat> findAllByCarId(Long id) {
         return seatRepository.findAllByCarIdEquals(id);
     }
 
+    /**
+     * Функция поиска всех мест по id билета
+     * @param id принимает id билета {@link Ticket#id}
+     * @return возвращает список мест
+     */
     @Override
     public List<Seat> findAllByTicketId(Long id) {
         return seatRepository.findAllByTicketIdEquals(id);
     }
 
+    /**
+     * Функция поиска всех мест по стоимости
+     * @param cost параметр стоимости для поиска
+     * @return возвращает список мест
+     */
     @Override
     public List<Seat> findAllByCost(Integer cost) {
         return seatRepository.findAllByCostEquals(cost);

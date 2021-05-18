@@ -8,6 +8,10 @@ import uni.ami.restdb.model.Train;
 
 import java.util.List;
 
+/**
+ * Репозиторий станций
+ * @author damir
+ */
 @Repository
 public interface StationRepository extends JpaRepository<Station, Long> {
     Long findStationIdByNameEquals(String name);
@@ -19,7 +23,4 @@ public interface StationRepository extends JpaRepository<Station, Long> {
     List<Station> findAllByDepTrainIdAndArrTrainIdEquals(Long arrTrain_id, Long depTrain_id);
     List<Station> findAllByCityIdEquals(Long city_id);
     List<Station> findAllByCity_NameEquals(String cityName);
-
-//    @Query("select s.city from Station s")
-//    List<Object> getStationCities();
 }

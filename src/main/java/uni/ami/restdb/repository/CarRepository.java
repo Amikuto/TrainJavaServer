@@ -6,6 +6,10 @@ import uni.ami.restdb.model.Car;
 
 import java.util.List;
 
+/**
+ * Репозиторий вагонов
+ * @author damir
+ */
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findAllByTrainIdEquals(Long trainId);

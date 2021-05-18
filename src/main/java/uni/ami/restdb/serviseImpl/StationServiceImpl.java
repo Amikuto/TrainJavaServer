@@ -18,6 +18,10 @@ import uni.ami.restdb.service.StationService;
 
 import java.util.List;
 
+/**
+ * Класс сервиса станций
+ * @author damir
+ */
 @Slf4j
 @Service
 public class StationServiceImpl implements StationService {
@@ -28,18 +32,33 @@ public class StationServiceImpl implements StationService {
     @Autowired
     CityRepository cityRepository;
 
+    /**
+     * Функция сохранения станции в базе данных
+     * @param station параметр данных станций {@link Station}
+     * @param cityName параметр названия города {@link City}
+     * @return возвразает сохраненную станцию {@link Station}
+     */
     @Override
     public Station save(Station station, String cityName) {
             City city = cityRepository.findByNameEquals(cityName);
             if (city != null) {
                 station.setCity(city);
                 station.setCityName(city.getName());
-                return stationRepository.save(station);
+                try {
+                    return stationRepository.save(station);
+                } catch (Exception e) {
+                    return null;
+                }
             } else {
                 throw new ResourceNotFoundException("Города с таким названием не найдено!");
             }
     }
 
+    /**
+     * Функция удаления станции из базы данных
+     * @param id принимет в качестве параметра id станции
+     * @return возвращает HttpStatus.OK {@link ResponseEntity}
+     */
     @Override
     public ResponseEntity<?> delete(Long id) {
         Station station = stationRepository.findById(id).orElseThrow(FindException::new);
@@ -47,6 +66,12 @@ public class StationServiceImpl implements StationService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Функция изменения информации о станции в базе данных
+     * @param id принимет в качестве параметра id станции
+     * @param station принимет в качестве параметра класс станции для изменения данных {@link Station}
+     * @return возвращает класс станции с измененной информацией {@link Station}
+     */
     @Override
     public Station update(Long id, Station station) {
         return stationRepository.findById(id)
@@ -65,11 +90,21 @@ public class StationServiceImpl implements StationService {
                 }).orElseThrow(() -> new ResourceNotFoundException("Станции с данным id не найдено!"));
     }
 
+    /**
+     * Функция поиска станции по id
+     * @param id принимет в качестве параметра id станции
+     * @return возвращает класс станции {@link Station}
+     */
     @Override
     public Station getStationById(Long id) {
         return stationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Станции с данным id не найдено!"));
     }
 
+    /**
+     * Функция поиска всех станций в базе данных
+     * @param pageable
+     * @return возвращает список всех станций в формате Pageable {@link Pageable}
+     */
     @Override
     public Page<Station> getAll(Pageable pageable) {
         return stationRepository.findAll(pageable);
@@ -94,6 +129,11 @@ public class StationServiceImpl implements StationService {
         return stationRepository.findStationIdByNameEquals(name);
     }
 
+    /**
+     * Функция поиска станций по названию города в котором они распаложены
+     * @param cityName параметр названия города {@link City}
+     * @return возвращает список всех станций
+     */
     public List<Station> getStationsByCityName(String cityName) {
         return stationRepository.findAllByCity_NameEquals(cityName);
     }

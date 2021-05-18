@@ -27,10 +27,4 @@ public interface TrainService {
     List<Train> findAllByDepartingStationAndArrivingStation(Long depStationId, Long arrStationId);
 
     List<Train> findAllByArrivingStationAndDepartingStationAndDate(String depStationName, String arrStationName, String date);
-
-//    List<Train> getAllByDepartingTrains(Long id);
-//
-//    List<Train> getAllByArrivingTrains(Long id);
-//
-//    List<Train> getAllByDepartingAndArrivingTrains(Long depTrainId, Long arrTrainId);
 }

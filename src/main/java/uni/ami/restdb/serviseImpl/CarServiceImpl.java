@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import uni.ami.restdb.exceptions.FindException;
 import uni.ami.restdb.exceptions.ResourceNotFoundException;
 import uni.ami.restdb.model.Car;
 import uni.ami.restdb.model.CarClass;
@@ -20,7 +19,12 @@ import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.CarService;
 
 import java.util.List;
+import java.util.Locale;
 
+/**
+ * Класс сервиса вагонов
+ * @author damir
+ */
 @Slf4j
 @Service
 public class CarServiceImpl implements CarService {
@@ -37,6 +41,13 @@ public class CarServiceImpl implements CarService {
     @Autowired
     CarClassRepository carClassRepository;
 
+    /**
+     * Функция сохранения вагона в базе данных
+     * находит в базе данных поезд с переданным id и добавляет его сущность классу вагона
+     * @param car принимает класс вагона для сохранения {@link Car}
+     * @return возвращает сохраненный вагон {@link Car}
+     * @throws ResourceNotFoundException в случае если тип или класс вагона с переданным именем не найдены возвращает ошибку поиска
+     */
     @Override
     public Car save(Car car) throws ResourceNotFoundException {
         Train train = trainRepository.findById(car.getTId()).orElseThrow(() -> new ResourceNotFoundException("error"));
@@ -44,11 +55,11 @@ public class CarServiceImpl implements CarService {
         car.setTId(train.getId());
 
         try {
-            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass().toLowerCase());
             car.setCarClass(carClass);
             car.setCClass(carClass.getName());
 
-            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+            CarType carType = carTypeRepository.findByNameEquals(car.getCType().toLowerCase());
             car.setCarType(carType);
             car.setCType(carType.getName());
         } catch (NullPointerException e) {
@@ -57,6 +68,11 @@ public class CarServiceImpl implements CarService {
         return carRepository.save(car);
     }
 
+    /**
+     * Функция удаленя вагона из базы данных
+     * @param id принимет Long параметр id вагона
+     * @return возвращает HttpStatus.OK {@link ResponseEntity}
+     */
     @Override
     public ResponseEntity<?> delete(Long id) {
         Car car = getCarById(id);
@@ -64,13 +80,19 @@ public class CarServiceImpl implements CarService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Функция изменения информации о вагоне в базе данных
+     * @param id Long параметр id вагона
+     * @param car принимает класс вагона для изменения данных {@link Car}
+     * @return возвращает измененный вагон {@link Car}
+     */
     @Override
     public Car update(Long id, Car car) {
         return carRepository.findById(id)
                 .map(car_temp -> {
                     if (car.getCClass() != null) {
                         try {
-                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
+                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass().toLowerCase());
                             car_temp.setCarClass(carClass);
                             car_temp.setCClass(carClass.getName());
                         } catch (NullPointerException e) {
@@ -80,7 +102,7 @@ public class CarServiceImpl implements CarService {
 
                     if (car.getCType() != null) {
                         try {
-                            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
+                            CarType carType = carTypeRepository.findByNameEquals(car.getCType().toLowerCase());
                             car_temp.setCarType(carType);
                             car_temp.setCType(carType.getName());
                         } catch (NullPointerException e) {
@@ -93,14 +115,24 @@ public class CarServiceImpl implements CarService {
                     }
 
                     return carRepository.save(car_temp);
-                }).orElseThrow(FindException::new);
+                }).orElseThrow(() -> new ResourceNotFoundException("error"));
     }
 
+    /**
+     * Функция поиска вагона по переданному id
+     * @param id Long параметр id вагона
+     * @return возвращает вагон с указанным id {@link Car}
+     */
     @Override
     public Car getCarById(Long id) {
         return carRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("error"));
     }
 
+    /**
+     * Функция поиска всех вагонов
+     * @param pageable
+     * @return возвращает список всех вагонов в формате Pageable {@link Pageable}
+     */
     @Override
     public Page<Car> getAll(Pageable pageable) {
         return carRepository.findAll(pageable);

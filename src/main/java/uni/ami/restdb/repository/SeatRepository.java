@@ -7,6 +7,10 @@ import uni.ami.restdb.model.Ticket;
 
 import java.util.List;
 
+/**
+ * Репозиторий мест
+ * @author damir
+ */
 @Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
     List<Seat> findAllByCostEquals(Integer cost);
