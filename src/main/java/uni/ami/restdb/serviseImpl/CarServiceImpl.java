@@ -19,7 +19,6 @@ import uni.ami.restdb.repository.TrainRepository;
 import uni.ami.restdb.service.CarService;
 
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Класс сервиса вагонов
@@ -55,11 +54,11 @@ public class CarServiceImpl implements CarService {
         car.setTId(train.getId());
 
         try {
-            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass().toLowerCase());
+            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
             car.setCarClass(carClass);
             car.setCClass(carClass.getName());
 
-            CarType carType = carTypeRepository.findByNameEquals(car.getCType().toLowerCase());
+            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
             car.setCarType(carType);
             car.setCType(carType.getName());
         } catch (NullPointerException e) {
@@ -92,7 +91,7 @@ public class CarServiceImpl implements CarService {
                 .map(car_temp -> {
                     if (car.getCClass() != null) {
                         try {
-                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass().toLowerCase());
+                            CarClass carClass = carClassRepository.findByNameEquals(car.getCClass());
                             car_temp.setCarClass(carClass);
                             car_temp.setCClass(carClass.getName());
                         } catch (NullPointerException e) {
@@ -102,7 +101,7 @@ public class CarServiceImpl implements CarService {
 
                     if (car.getCType() != null) {
                         try {
-                            CarType carType = carTypeRepository.findByNameEquals(car.getCType().toLowerCase());
+                            CarType carType = carTypeRepository.findByNameEquals(car.getCType());
                             car_temp.setCarType(carType);
                             car_temp.setCType(carType.getName());
                         } catch (NullPointerException e) {
