@@ -45,4 +45,10 @@ public class City {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonManagedReference
     private List<Station> stations;
+
+    public City(Long id, String name, List<Station> stations) {
+        this.id = id;
+        this.name = name;
+        this.stations = stations;
+    }
 }
