@@ -105,11 +105,6 @@ public class Car extends AuditModel {
     @Transient
     private Long tId;
 
-    public Car(Long id, Integer number) {
-        this.id = id;
-        this.number = number;
-    }
-
     /**
      * Метод для заполнения полей класса, типа, поезда
      */
@@ -118,5 +113,10 @@ public class Car extends AuditModel {
         this.cClass = carClass.getName();
         this.cType = carType.getName();
         this.tId = train.getId();
+    }
+
+    public Car(Long id, Integer number) {
+        this.id = id;
+        this.number = number;
     }
 }

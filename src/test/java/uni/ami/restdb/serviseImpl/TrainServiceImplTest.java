@@ -7,8 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import uni.ami.restdb.model.AuditModel;
+import uni.ami.restdb.model.City;
+import uni.ami.restdb.model.Station;
 import uni.ami.restdb.model.Train;
-import uni.ami.restdb.model.User;
 
 import javax.annotation.Resource;
 
@@ -19,15 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @EnableAutoConfiguration
 @Configuration
-class UserServiceImplTest {
+class TrainServiceImplTest {
 
     @Resource
     @Autowired
-    private UserServiceImpl service;
+    private TrainServiceImpl service;
 
     @Test
     void saveAndDelete() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
+        Train testClass = new Train(1000L, LocalDate.parse("2020-04-12"), LocalDate.parse("2020-04-12"), "Moscow", "Kazan");
         try {
             service.save(testClass);
         } finally {
@@ -37,10 +38,10 @@ class UserServiceImplTest {
 
     @Test
     void update() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
+        Train testClass = new Train(1000L, LocalDate.parse("2020-04-12"), LocalDate.parse("2020-04-12"), "Moscow", "Kazan");
         try {
-            User test1 = new User(2000L, "fullName2", "email2", "login2", "password2");
-            test1.setLogin("testLogin3");
+            Train test1 = new Train(2000L, LocalDate.parse("2020-04-12"), LocalDate.parse("2020-04-12"), "Kazan", "Moscow");
+            test1.setArrivalCity("TestName3");
             service.update(testClass.getId(), test1);
         } finally {
             service.delete(testClass.getId());
@@ -48,11 +49,11 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getUserById() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
+    void getTrainById() {
+        Train testClass = new Train(1000L, LocalDate.parse("2020-04-12"), LocalDate.parse("2020-04-12"), "Moscow", "Kazan");
         service.save(testClass);
         try {
-            service.getUserById(testClass.getId());
+            service.getTrainById(testClass.getId());
         } finally {
             service.delete(testClass.getId());
         }

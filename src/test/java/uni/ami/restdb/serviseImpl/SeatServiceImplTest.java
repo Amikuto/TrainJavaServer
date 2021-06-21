@@ -6,30 +6,26 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
-import uni.ami.restdb.model.AuditModel;
-import uni.ami.restdb.model.Train;
-import uni.ami.restdb.model.User;
+import uni.ami.restdb.model.Seat;
 
 import javax.annotation.Resource;
-
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @EnableAutoConfiguration
 @Configuration
-class UserServiceImplTest {
+class SeatServiceImplTest {
 
     @Resource
     @Autowired
-    private UserServiceImpl service;
+    private SeatServiceImpl service;
 
     @Test
     void saveAndDelete() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
+        Seat testClass = new Seat(1000L, 1, 1);
         try {
-            service.save(testClass);
+            service.save(testClass, testClass.getId());
         } finally {
             service.delete(testClass.getId());
         }
@@ -37,10 +33,10 @@ class UserServiceImplTest {
 
     @Test
     void update() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
+        Seat testClass = new Seat(1000L, 1, 1);
         try {
-            User test1 = new User(2000L, "fullName2", "email2", "login2", "password2");
-            test1.setLogin("testLogin3");
+            Seat test1 = new Seat(2000L, 2, 2);
+            test1.setNumber(3);
             service.update(testClass.getId(), test1);
         } finally {
             service.delete(testClass.getId());
@@ -48,11 +44,11 @@ class UserServiceImplTest {
     }
 
     @Test
-    void getUserById() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
-        service.save(testClass);
+    void getSeatById() {
+        Seat testClass = new Seat(1000L, 1, 1);
+        service.save(testClass, testClass.getId());
         try {
-            service.getUserById(testClass.getId());
+            service.getSeatById(testClass.getId());
         } finally {
             service.delete(testClass.getId());
         }

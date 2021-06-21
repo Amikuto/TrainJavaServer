@@ -24,4 +24,9 @@ public class CarType {
      */
     @Column(columnDefinition = "text")
     private String name;
+
+    public CarType(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

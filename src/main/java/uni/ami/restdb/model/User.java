@@ -63,4 +63,12 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private List<Ticket> tickets;
+
+    public User(Long id, String fullName, String email, String login, String password) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.login = login;
+        this.password = password;
+    }
 }

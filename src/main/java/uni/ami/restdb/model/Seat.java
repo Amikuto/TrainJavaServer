@@ -87,4 +87,10 @@ public class Seat extends AuditModel {
         this.cId = car.getId();
         this.seatType = type.getName();
     }
+
+    public Seat(Long id, Integer cost, Integer number) {
+        this.id = id;
+        this.cost = cost;
+        this.number = number;
+    }
 }

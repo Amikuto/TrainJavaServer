@@ -46,9 +46,8 @@ public class City {
     @JsonManagedReference
     private List<Station> stations;
 
-    public City(Long id, String name, List<Station> stations) {
+    public City(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.stations = stations;
     }
 }

@@ -5,9 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1fde02ba-c31a-48d7-9471-180260b2649a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_xml_bind_jaxb_osgi_2_2_10.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_json_path_3_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_rest_assured_4_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_rest_assured_common_3_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_spring_commons_4_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_spring_mock_mvc_4_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_rest_assured_xml_path_3_3_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_javax_activation_api_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_xml_bind_jaxb_api_2_3_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_sling_org_apache_sling_javax_activation_0_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ccil_cowan_tagsoup_tagsoup_1_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_2_5_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_json_2_5_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_groovy_groovy_xml_2_5_14.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/restdb.iml" beforeDir="false" afterPath="$PROJECT_DIR$/restdb.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/controller/SeatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/controller/SeatController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/CarClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/CarClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/CarType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/CarType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/City.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Seat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Seat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Train.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/Train.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uni/ami/restdb/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/model/CarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/model/CarTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/CityServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/CityServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/StationServiceImplMockito.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/StationServiceImplMockito.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/StationServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/StationServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/uni/ami/restdb/serviseImpl/UserServiceImplTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +50,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Class" />
         <option value="JUnit5 Test Class" />
       </list>
     </option>
@@ -54,18 +88,21 @@
       <recent name="uni.ami.restdb.model.AuditModel" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="uni.ami.restdb.controller" />
       <recent name="uni.ami.restdb.serviseImpl" />
       <recent name="uni.ami.restdb.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CarTest.getId">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+  <component name="RunManager" selected="Spring Boot.RestdbApplication">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -86,6 +123,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CityServiceImplTest.getCityById" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="restdb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="uni.ami.restdb.serviseImpl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="uni.ami.restdb.serviseImpl" />
+      <option name="MAIN_CLASS_NAME" value="uni.ami.restdb.serviseImpl.CityServiceImplTest" />
+      <option name="METHOD_NAME" value="getCityById" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RestdbApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="restdb" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="uni.ami.restdb.RestdbApplication" />
@@ -95,6 +148,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CityServiceImplTest.getCityById" />
         <item itemvalue="JUnit.CarTest.getId" />
       </list>
     </recent_temporary>
@@ -112,6 +166,7 @@
       <workItem from="1621438340046" duration="910000" />
       <workItem from="1622042813263" duration="15000" />
       <workItem from="1622406227992" duration="2780000" />
+      <workItem from="1623056510828" duration="5722000" />
     </task>
     <servers />
   </component>

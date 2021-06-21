@@ -106,4 +106,12 @@ public class Train extends AuditModel {
         this.departingCity = depStation.getCityName();
         this.arrivalCity = arrStation.getCityName();
     }
+
+    public Train(Long id, LocalDate dateDep, LocalDate dateArr, String departingCity, String arrivalCity) {
+        this.id = id;
+        this.dateDep = dateDep;
+        this.dateArr = dateArr;
+        this.departingCity = departingCity;
+        this.arrivalCity = arrivalCity;
+    }
 }

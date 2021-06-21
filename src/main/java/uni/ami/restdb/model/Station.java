@@ -74,4 +74,10 @@ public class Station extends AuditModel implements Serializable {
     private void setCityName() {
         this.cityName = city.getName();
     }
+
+    public Station(Long id, String name, City city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+    }
 }

@@ -84,8 +84,8 @@ public class SeatController {
      * @return возвращает измененный класс места
      */
     @PutMapping("/seats/{seatId}")
-    public Seat addCar(@Valid @PathVariable Long seatId,
-                       @Valid @RequestBody Seat seat) {
+    public Seat updateSeat(@Valid @PathVariable Long seatId,
+                           @Valid @RequestBody Seat seat) {
         return seatService.update(seatId, seat);
     }
 
