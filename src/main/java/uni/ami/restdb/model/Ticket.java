@@ -1,20 +1,23 @@
 package uni.ami.restdb.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Сущность билетов
  * @author damir
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "ticket")
 public class Ticket extends AuditModel {
@@ -50,6 +53,7 @@ public class Ticket extends AuditModel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private List<Seat> seats;
 
     /**
@@ -59,5 +63,19 @@ public class Ticket extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

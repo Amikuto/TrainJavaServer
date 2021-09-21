@@ -129,7 +129,7 @@ public class CarServiceImpl implements CarService {
 
     /**
      * Функция поиска всех вагонов
-     * @param pageable
+     * @param pageable заглушка
      * @return возвращает список всех вагонов в формате Pageable {@link Pageable}
      */
     @Override

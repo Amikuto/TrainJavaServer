@@ -37,7 +37,7 @@ public class SeatServiceImpl implements SeatService {
     /**
      * Функция сохранения места в базе данных
      * @param seat принимает класс места для сохранения {@link Seat}
-     * @param id принимает id вагона для сохранения в нем места {@link Car#id}
+     * @param id принимает id вагона для сохранения в нем места
      * @return возвращает сохраненнре место {@link Seat}
      */
     @Override
@@ -126,7 +126,7 @@ public class SeatServiceImpl implements SeatService {
 
     /**
      * Функция поиска всех мест в базе данных
-     * @param pageable
+     * @param pageable заглушка
      * @return возвращает список всех мест в формате Pageable {@link Pageable}
      */
     @Override
@@ -136,7 +136,7 @@ public class SeatServiceImpl implements SeatService {
 
     /**
      * Функция поиска всех мест по id вагона
-     * @param id принимает id вагона {@link Car#id}
+     * @param id принимает id вагона
      * @return возвращает список мест
      */
     @Override
@@ -146,7 +146,7 @@ public class SeatServiceImpl implements SeatService {
 
     /**
      * Функция поиска всех мест по id билета
-     * @param id принимает id билета {@link Ticket#id}
+     * @param id принимает id билета
      * @return возвращает список мест
      */
     @Override

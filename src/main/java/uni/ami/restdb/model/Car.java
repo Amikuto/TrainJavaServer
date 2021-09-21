@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Сущность вагонов базы данных
@@ -20,17 +21,20 @@ import java.util.List;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "car")
+@NoArgsConstructor
 public class Car extends AuditModel {
 
     /**
      * Поле id сущности
      */
     @Id
-    @GeneratedValue(generator = "car_generator")
+    @GeneratedValue(generator = "car_generator", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
             name = "car_generator",
             sequenceName = "car_sequence",
@@ -53,6 +57,7 @@ public class Car extends AuditModel {
     @JoinColumn(name = "car_class")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private CarClass carClass;
 
     /**
@@ -63,6 +68,7 @@ public class Car extends AuditModel {
     @JoinColumn(name = "car_type")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private CarType carType;
 
     /**
@@ -73,6 +79,7 @@ public class Car extends AuditModel {
     @JoinColumn(name = "train_id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private Train train;
 
     /**
@@ -82,6 +89,7 @@ public class Car extends AuditModel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "car")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
+    @ToString.Exclude
     private List<Seat> seats;
 
     /**
@@ -115,8 +123,16 @@ public class Car extends AuditModel {
         this.tId = train.getId();
     }
 
-    public Car(Long id, Integer number) {
-        this.id = id;
-        this.number = number;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Car car = (Car) o;
+        return Objects.equals(id, car.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

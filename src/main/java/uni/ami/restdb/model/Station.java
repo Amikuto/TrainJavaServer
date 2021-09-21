@@ -1,22 +1,25 @@
 package uni.ami.restdb.model;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Сущность станций
  * @author damir
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "station")
 public class Station extends AuditModel implements Serializable {
@@ -36,7 +39,7 @@ public class Station extends AuditModel implements Serializable {
     /**
      * Поле имени станции
      */
-    @Column(columnDefinition = "text", unique = false)
+    @Column(columnDefinition = "text")
     private String name;
 
     /**
@@ -46,6 +49,7 @@ public class Station extends AuditModel implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "depStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private List<Train> depTrain;
 
     /**
@@ -55,6 +59,7 @@ public class Station extends AuditModel implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrStation", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private List<Train> arrTrain;
 
     /**
@@ -65,6 +70,7 @@ public class Station extends AuditModel implements Serializable {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonBackReference
     @JoinColumn(columnDefinition = "stations")
+    @ToString.Exclude
     private City city;
 
     @Transient
@@ -75,9 +81,16 @@ public class Station extends AuditModel implements Serializable {
         this.cityName = city.getName();
     }
 
-    public Station(Long id, String name, City city) {
-        this.id = id;
-        this.name = name;
-        this.city = city;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Station station = (Station) o;
+        return Objects.equals(id, station.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

@@ -21,45 +21,45 @@ import static org.junit.jupiter.api.Assertions.*;
 @Configuration
 class UserServiceImplTest {
 
-    @Resource
-    @Autowired
-    private UserServiceImpl service;
-
-    @Test
-    void saveAndDelete() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
-        try {
-            service.save(testClass);
-        } finally {
-            service.delete(testClass.getId());
-        }
-    }
-
-    @Test
-    void update() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
-        try {
-            User test1 = new User(2000L, "fullName2", "email2", "login2", "password2");
-            test1.setLogin("testLogin3");
-            service.update(testClass.getId(), test1);
-        } finally {
-            service.delete(testClass.getId());
-        }
-    }
-
-    @Test
-    void getUserById() {
-        User testClass = new User(1000L, "fullName", "email", "login", "password");
-        service.save(testClass);
-        try {
-            service.getUserById(testClass.getId());
-        } finally {
-            service.delete(testClass.getId());
-        }
-    }
-
-    @Test
-    void getAll() {
-        service.getAll(Pageable.unpaged());
-    }
+//    @Resource
+//    @Autowired
+//    private UserServiceImpl service;
+//
+//    @Test
+//    void saveAndDelete() {
+//        User testClass = new User(1000L, "fullName", "email", "login", "password");
+//        try {
+//            service.save(testClass);
+//        } finally {
+//            service.delete(testClass.getId());
+//        }
+//    }
+//
+//    @Test
+//    void update() {
+//        User testClass = new User(1000L, "fullName", "email", "login", "password");
+//        try {
+//            User test1 = new User(2000L, "fullName2", "email2", "login2", "password2");
+//            test1.setLogin("testLogin3");
+//            service.update(testClass.getId(), test1);
+//        } finally {
+//            service.delete(testClass.getId());
+//        }
+//    }
+//
+//    @Test
+//    void getUserById() {
+//        User testClass = new User(1000L, "fullName", "email", "login", "password");
+//        service.save(testClass);
+//        try {
+//            service.getUserById(testClass.getId());
+//        } finally {
+//            service.delete(testClass.getId());
+//        }
+//    }
+//
+//    @Test
+//    void getAll() {
+//        service.getAll(Pageable.unpaged());
+//    }
 }

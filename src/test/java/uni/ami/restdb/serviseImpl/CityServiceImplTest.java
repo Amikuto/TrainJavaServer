@@ -20,43 +20,43 @@ import static org.junit.jupiter.api.Assertions.*;
 @Configuration
 class CityServiceImplTest {
 
-    @Resource
-    @Autowired
-    private CityServiceImpl cityService;
-
-    @Test
-    void saveAndDelete() {
-        City city = new City(1000L, "Test");
-        try {
-            cityService.save(city);
-        } finally {
-            cityService.delete(city.getId());
-        }
-    }
-
-    @Test
-    void update() {
-        City city = new City(1000L, "Test");
-        try {
-            City city1 = new City(2000L, "2ndCityName");
-            city1.setName("AnotherTestName");
-            cityService.update(city.getId(), city1);
-        } finally {
-            cityService.delete(city.getId());
-        }
-    }
-
-    @Test
-    void getCityById() {
-        City city = new City(1000L, "Test");
-        cityService.save(city);
-        try {
-            cityService.getCityById(city.getId());
-        } finally {
-            cityService.delete(city.getId());
-        }
-    }
-
-    @Test
-    void getAll() { cityService.getAll(Pageable.unpaged()); }
+//    @Resource
+//    @Autowired
+//    private CityServiceImpl cityService;
+//
+//    @Test
+//    void saveAndDelete() {
+//        City city = new City(1000L, "Test");
+//        try {
+//            cityService.save(city);
+//        } finally {
+//            cityService.delete(city.getId());
+//        }
+//    }
+//
+//    @Test
+//    void update() {
+//        City city = new City(1000L, "Test");
+//        try {
+//            City city1 = new City(2000L, "2ndCityName");
+//            city1.setName("AnotherTestName");
+//            cityService.update(city.getId(), city1);
+//        } finally {
+//            cityService.delete(city.getId());
+//        }
+//    }
+//
+//    @Test
+//    void getCityById() {
+//        City city = new City(1000L, "Test");
+//        cityService.save(city);
+//        try {
+//            cityService.getCityById(city.getId());
+//        } finally {
+//            cityService.delete(city.getId());
+//        }
+//    }
+//
+//    @Test
+//    void getAll() { cityService.getAll(Pageable.unpaged()); }
 }

@@ -1,23 +1,25 @@
 package uni.ami.restdb.model;
 
-import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Сущность поездов
  * @author damir
  */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "train")
 public class Train extends AuditModel {
@@ -66,6 +68,7 @@ public class Train extends AuditModel {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     @JoinColumn(columnDefinition = "depTrain")
+    @ToString.Exclude
     private Station depStation;
 
     /**
@@ -76,6 +79,7 @@ public class Train extends AuditModel {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
     @JoinColumn(columnDefinition = "arrTrain")
+    @ToString.Exclude
     private Station arrStation;
 
     /**
@@ -85,6 +89,7 @@ public class Train extends AuditModel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "train")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
+    @ToString.Exclude
     private List<Car> cars;
 
     @Transient // Чтобы строка не создавалась в бд
@@ -107,11 +112,16 @@ public class Train extends AuditModel {
         this.arrivalCity = arrStation.getCityName();
     }
 
-    public Train(Long id, LocalDate dateDep, LocalDate dateArr, String departingCity, String arrivalCity) {
-        this.id = id;
-        this.dateDep = dateDep;
-        this.dateArr = dateArr;
-        this.departingCity = departingCity;
-        this.arrivalCity = arrivalCity;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Train train = (Train) o;
+        return Objects.equals(id, train.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

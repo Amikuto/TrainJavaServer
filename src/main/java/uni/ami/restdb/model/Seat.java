@@ -4,12 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Сущность мест (сидений) в базе данных
@@ -19,8 +20,10 @@ import javax.persistence.*;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "seat")
 public class Seat extends AuditModel {
@@ -56,6 +59,7 @@ public class Seat extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonIgnore
+    @ToString.Exclude
     private SeatType type;
 
     /**
@@ -65,15 +69,17 @@ public class Seat extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JsonBackReference
+    @ToString.Exclude
     private Car car;
 
     /**
      * Опциональное поле внешней связи между сущностью место и билетом
      * представляется в виде класса Ticket {@link Ticket}
      */
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
+    @ToString.Exclude
     private Ticket ticket;
 
     @Transient
@@ -88,9 +94,16 @@ public class Seat extends AuditModel {
         this.seatType = type.getName();
     }
 
-    public Seat(Long id, Integer cost, Integer number) {
-        this.id = id;
-        this.cost = cost;
-        this.number = number;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Seat seat = (Seat) o;
+        return Objects.equals(id, seat.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }
